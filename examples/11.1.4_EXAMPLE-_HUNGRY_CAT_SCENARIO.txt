@@ -1,0 +1,35 @@
+This example is due to Michael Winikoff, Lin Padgham, James Harland, and John Thangarajah.
+
+A cat is sitting on the floor. He is hungry and would love to eat a cookie sitting on a nearby table. He plans to jump onto a nearby chair and, from the chair, onto the table. But after the cat jumps onto the chair, someone moves the chair away from the table. The cat then modifies his plan. He plans to jump onto a nearby shelf and then onto the table. When he jumps onto the shelf, he notices a cupcake lying there, so he gobbles it up immediately and is satiated.
+
+We start by providing the event calculus axioms for the domain. We use a simple spatial theory. If an agent is on surface s1, it is possible to jump from s1 to surface s2, and the agent jumps from s1 to s2, then the agent will be on s2.
+
+In this case, the agent will no longer be on surface s1.
+
+If surface s1 is moved from surface s2 to surface s3, then it will be possible to jump from s1 to s3.
+
+In this case, it will no longer be possible to jump from surface s1 to surface s2.
+
+We use a simple theory of eating. If an agent is on a surface, some food is on the surface, and the agent eats the food, then the agent will be satiated.
+
+If an agent eats food that is on a surface, then the food will no longer be on the surface.
+
+We provide axioms for belief revision.
+
+HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, On(a, s)), t) ∧ HoldsAt(Believe(a, On(a, s)), t) ∧ We provide planning axioms. We give a definition for SelectedPlan(a, g, p, t) that enables the agent to plan trips consisting of one and two jumps in order to obtain food.
+
+∃s1, s2, f (HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, CanJump(s1, s2)), t) ∧ HoldsAt(Believe(a, On( f , s2)), t) ∧ ∃s1, s2, s3, f (HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, CanJump(s1, s2)), t) ∧ HoldsAt(Believe(a, CanJump(s2, s3)), t) ∧ HoldsAt(Believe(a, On( f , s3)), t) ∧ We give a definition for SoundPlan(a, g, p, t) that deals with the plans selected by the agent believes it is possible to jump from the source surface to the destination surface.
+
+the agent is not satiated, the agent is on a surface, and some food is on the surface, then the agent will eat the food.
+
+¬HoldsAt(Satiated(a), t) ∧ HoldsAt(On(a, s), t) ∧ We specify some observations. The cat has the goal of being satiated, and no plans are active.
+
+The cat is on the floor, food is on the table and the shelf, and it is possible to jump from the floor to the chair, from the chair to the table, and from the shelf to the table.
+
+The cat believes the cat is on the floor, believes food is on the table, does not believe food is on the shelf, and believes it is possible to jump from the floor to the chair, from the chair to the table, and from the shelf to the table.
+
+The cat does not believe the cat is satiated.
+
+The narrative consists of someone moving the chair at timepoint 2.
+
+We can show that the cat will eat the food on the shelf.

@@ -1,0 +1,15 @@
+An agent picks up a book; the book then moves along with the agent. We start with the following spatial theory. If an agent walks from room r1 to room r2, then the agent will be in r2 and will no longer be in r1.
+
+An object is in one room at a time.
+
+If an agent is in the same room as an object and the agent picks up the object, then the agent will be holding the object.
+
+If an agent is holding an object and the agent lets go of the object, then the agent will no longer be holding the object.
+
+We then represent the indirect effects of walking while holding an object using positive and negative effect axioms. If an agent is holding an object and the agent walks from room r1 to room r2, then the object will be in r2 and will no longer be in r1.
+
+Now consider the following observations and narrative. Nathan and the book start out in the living room.
+
+Nathan picks up the book and walks into the kitchen.
+
+We also have We can then show that the book will be in the kitchen.

@@ -1,0 +1,15 @@
+We model a falling object using events. We have an episode of no change (the object at rest above the ground), followed by an episode of continuous change (falling), followed by another episode of no change (the object hits the ground).
+
+We use the following axiomatization. If an agent drops an object, then the object will be falling, and the height of the object will be released from the commonsense law of inertia.
+
+Releases(Drop(a, o), Height(o, h), t) In EC and DEC, events are instantaneous. Notice that we are using the fluent Falling here as a way of representing an event with duration or a process. (We present a modification of EC for events with duration in Appendix C.) We describe the motion of the object from the moment it is dropped until it stops falling as follows.
+
+HoldsAt(Height(o, h), t1) ∧ Happens(Drop(a, o), t1) ∧ 0 < t2 ∧ HoldsAt(Height(o, h − 1 Gt2 If an object hits the ground, then the object will no longer be falling.
+
+A falling object hits the ground when its height becomes zero.
+
+HoldsAt(Falling(o), t) ∧ If an object hits the ground and the height of the object is h, then the height of the object will no longer be released from the commonsense law of inertia and the height of the object will be h.
+
+An object has a unique height.
+
+We can show that the apple will hit the ground at timepoint 1 and that its height at timepoint 2 will be zero.

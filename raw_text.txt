@@ -1,0 +1,1091 @@
+The Effects of Events
+
+CHAPTER
+
+3
+
+Events change the state of the world. When an event occurs, some properties of the
+world that are false become true and some properties of the world that are true become
+false. This chapter is concerned with the representation of the effects of events on
+world properties. We discuss positive and negative effect axioms, commonly used
+effect axiom idioms, preconditions, and state constraints.
+
+3.1 POSITIVE AND NEGATIVE EFFECT AXIOMS
+
+In the event calculus, the effects of events are described by two predicates. The
+predicate Initiates(α, β, τ ) represents that, if an event α occurs at timepoint τ , then
+fluent β will be true after τ . The predicate Terminates(α, β, τ ) represents that, if an
+event α occurs at timepoint τ , then fluent β will be false after τ . We represent the
+effects of events using effect axioms.
+
+The changes produced by an event may depend on the context in which the
+event occurs; an event may have one effect in one context and another effect
+in another context. Therefore, effect axioms contain conditions representing
+contexts.
+Definition 3.1. If γ is a condition representing the context, α is an event term, β is a
+fluent term, and τ is a timepoint term, then
+
+γ ⇒ Initiates(α, β, τ )
+is a positive effect axiom. This represents that, if γ is true and α occurs at τ , then β
+will be true after τ .
+Definition 3.2. If γ is a condition representing the context, α is an event term, β is a
+fluent term, and τ is a timepoint term, then
+
+γ ⇒ Terminates(α, β, τ )
+is a negative effect axiom. This represents that, if γ is true and α occurs at τ , then β
+will be false after τ .
+
+Using the conjunction of axioms EC, a fluent is true (false) for times greater than
+the time of the initiating (terminating) event. Using the conjunction of axioms DEC,
+a fluent is true (false) starting one timepoint after the time of the initiating (terminat-
+ing) event. For example, suppose we have Initiates(Init, Fluent, t), Happens(Init, 1),
+
+49
+
+50
+
+CHAPTER 3 The Effects of Events
+
+Terminates(Term, Fluent, t), and Happens(Term, 4). Figure 3.1 shows when Fluent
+is true using the conjunction of axioms EC; Figure 3.2 shows when Fluent is true
+using DEC.
+
+Init
+
+Term
+
+–1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+FIGURE 3.1
+
+Truth value of a ﬂuent in EC.
+
+Init
+
+Term
+
+–1
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+FIGURE 3.2
+
+Truth value of a ﬂuent in DEC.
+
+3.1.1 EXAMPLE: TELEPHONE
+
+We perform complex commonsense reasoning about the effects of events whenever
+we use a telephone. The behavior of a phone is highly context-sensitive. If we pick up
+an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing,
+we expect to be connected to the caller.
+
+We can represent our knowledge about telephones using positive and negative
+effect axioms. If an agent picks up an idle phone, the phone will have a dial tone and
+will no longer be idle:
+
+HoldsAt(Idle(p), t) ⇒
+Initiates(PickUp(a, p), DialTone(p), t)
+
+HoldsAt(Idle(p), t) ⇒
+Terminates(PickUp(a, p), Idle(p), t)
+
+(3.1)
+
+(3.2)
+
+After picking up a phone, an agent may decide not to place a call. If an agent sets
+down a phone with a dial tone, the phone will be idle and will no longer have a
+dial tone:
+
+HoldsAt(DialTone(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+
+HoldsAt(DialTone(p), t) ⇒
+Terminates(SetDown(a, p), DialTone(p), t)
+
+(3.3)
+
+(3.4)
+
+3.1 Positive and negative effect axioms
+
+51
+
+When phone p1 has a dial tone and an agent dials phone p2 from p1, what happens
+depends on the state of p2. If p2 is idle, then p1 will be ringing p2, p1 will no longer
+have a dial tone, and p2 will no longer be idle:
+
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Initiates(Dial(a, p1, p2), Ringing(p1, p2), t)
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), DialTone(p1), t)
+
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), Idle(p2), t)
+
+If p2 is not idle, then p1 will have a busy signal:
+
+HoldsAt(DialTone(p1), t) ∧ ¬HoldsAt(Idle(p2), t) ⇒
+Initiates(Dial(a, p1, p2), BusySignal(p1), t)
+
+HoldsAt(DialTone(p1), t) ∧ ¬HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), DialTone(p1), t)
+
+(3.5)
+
+(3.6)
+
+(3.7)
+
+(3.8)
+
+(3.9)
+
+If an agent sets down a phone with a busy signal, then the phone will be idle and will
+no longer have a busy signal:
+
+HoldsAt(BusySignal(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+
+HoldsAt(BusySignal(p), t) ⇒
+Terminates(SetDown(a, p), BusySignal(p), t)
+
+(3.10)
+
+(3.11)
+
+A call may go unanswered. If phone p1 is ringing phone p2 and an agent sets down
+p1, then p1 will be idle, p2 will be idle, and p1 will no longer be ringing p2:
+
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p1), t)
+
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p2), t)
+
+HoldsAt(Ringing(p1, p2), t) ⇒
+Terminates(SetDown(a, p1), Ringing(p1, p2), t)
+
+(3.12)
+
+(3.13)
+
+(3.14)
+
+A call may be answered. If phone p1 is ringing phone p2 and an agent picks up p2,
+then p1 will be connected to p2 and p1 will no longer be ringing p2:
+
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(PickUp(a, p2), Connected(p1, p2), t)
+
+HoldsAt(Ringing(p1, p2), t) ⇒
+Terminates(PickUp(a, p2), Ringing(p1, p2), t)
+
+(3.15)
+
+(3.16)
+
+A call may be completed. If phone p1 is connected to phone p2 and an agent sets down
+p1, then p1 will be idle, p2 will be disconnected, and p1 will no longer be connected
+to p2:
+
+52
+
+CHAPTER 3 The Effects of Events
+
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p1), t)
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Disconnected(p2), t)
+
+HoldsAt(Connected(p1, p2), t) ⇒
+Terminates(SetDown(a, p1), Connected(p1, p2), t)
+
+(3.17)
+
+(3.18)
+
+(3.19)
+
+Similarly, if phone p1 is connected to phone p2 and an agent sets down p2, then p2
+will be idle, p1 will be disconnected, and p1 will no longer be connected to p2:
+
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p2), Idle(p2), t)
+
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p2), Disconnected(p1), t)
+
+HoldsAt(Connected(p1, p2), t) ⇒
+Terminates(SetDown(a, p2), Connected(p1, p2), t)
+
+(3.20)
+
+(3.21)
+
+(3.22)
+
+If an agent sets down a phone that is disconnected, then the phone will be idle and
+the phone will no longer be disconnected:
+
+HoldsAt(Disconnected(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+
+HoldsAt(Disconnected(p), t) ⇒
+Terminates(SetDown(a, p), Disconnected(p), t)
+
+(3.23)
+
+(3.24)
+
+Let us now use this axiomatization to solve a particular reasoning problem. We start
+by specifying some observations. At timepoint 0, all phones are idle, no phones have a
+dial tone or busy signal, no phones are ringing other phones, no phones are connected
+to other phones, and no phones are disconnected:
+
+HoldsAt(Idle(p), 0)
+¬HoldsAt(DialTone(p), 0)
+¬HoldsAt(BusySignal(p), 0)
+¬HoldsAt(Ringing(p1, p2), 0)
+¬HoldsAt(Connected(p1, p2), 0)
+¬HoldsAt(Disconnected(p), 0)
+
+(3.25)
+
+(3.26)
+
+(3.27)
+
+(3.28)
+
+(3.29)
+
+(3.30)
+
+We specify that fluents are never released from the commonsense law of inertia:
+
+¬ReleasedAt(f , t)
+
+(3.31)
+
+We specify a narrative. One agent picks up the phone and dials another agent, and
+then the other agent answers:
+
+Happens(PickUp(Agent1, Phone1), 0)
+
+(3.32)
+
+3.1 Positive and negative effect axioms
+
+53
+
+Happens(Dial(Agent1, Phone1, Phone2), 1)
+Happens(PickUp(Agent2, Phone2), 2)
+
+(3.33)
+(3.34)
+
+We can then show that the two agents will be connected.
+
+Proposition 3.1. Let (cid:6) be the conjunction of (3.1) through (3.24). Let (cid:7) = (3.32) ∧
+(3.33) ∧ (3.34). Let (cid:8) = U[PickUp, SetDown, Dial] ∧ U[Idle, DialTone, Ringing,
+BusySignal, Connected, Disconnected]. Let (cid:9) be the conjunction of (3.25) through
+(3.31). Then we have
+
+CIRC[(cid:6); Initiates, Terminates, Releases] ∧ CIRC[(cid:7); Happens] ∧
+(cid:8) ∧ (cid:9) ∧ DEC (cid:4) HoldsAt(Connected(Phone1, Phone2), 3)
+
+Proof. From CIRC[(cid:6); Initiates, Terminates, Releases] and Theorems 2.1 and 2.2,
+we have
+
+Initiates(e, f , t) ⇔
+
+(3.35)
+
+∃a, p (e = PickUp(a, p) ∧ f = DialTone(p) ∧ HoldsAt(Idle(p), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧ f = Idle(p) ∧ HoldsAt(DialTone(p), t)) ∨
+
+∃a, p1, p2 (e = Dial(a, p1, p2) ∧
+
+f = Ringing(p1, p2) ∧
+
+HoldsAt(DialTone(p1), t) ∧
+
+HoldsAt(Idle(p2), t)) ∨
+
+∃a, p1, p2 (e = Dial(a, p1, p2) ∧
+
+f = BusySignal(p1) ∧
+
+HoldsAt(DialTone(p1), t) ∧
+
+¬HoldsAt(Idle(p2), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧ f = Idle(p) ∧ HoldsAt(BusySignal(p), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧
+
+f = Idle(p1) ∧
+
+HoldsAt(Ringing(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧
+
+f = Idle(p2) ∧
+
+54
+
+CHAPTER 3 The Effects of Events
+
+HoldsAt(Ringing(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = PickUp(a, p2) ∧
+
+f = Connected(p1, p2) ∧
+
+HoldsAt(Ringing(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧
+
+f = Idle(p1) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧
+
+f = Disconnected(p2) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p2) ∧
+
+f = Idle(p2) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p2) ∧
+
+f = Disconnected(p1) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧ f = Idle(p) ∧ HoldsAt(Disconnected(p), t))
+
+Terminates(e, f , t) ⇔
+
+(3.36)
+
+∃a, p (e = PickUp(a, p) ∧ f = Idle(p) ∧ HoldsAt(Idle(p), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧ f = DialTone(p) ∧ HoldsAt(DialTone(p), t)) ∨
+
+∃a, p1, p2 (e = Dial(a, p1, p2) ∧
+
+f = DialTone(p1) ∧
+
+HoldsAt(DialTone(p1), t) ∧
+
+HoldsAt(Idle(p2), t)) ∨
+
+∃a, p1, p2
+
+3.1 Positive and negative effect axioms
+
+55
+
+(e = Dial(a, p1, p2) ∧
+
+f = Idle(p2) ∧
+
+HoldsAt(DialTone(p1), t) ∧
+
+HoldsAt(Idle(p2), t)) ∨
+
+∃a, p1, p2
+
+(e = Dial(a, p1, p2) ∧
+
+f = DialTone(p1) ∧
+
+HoldsAt(DialTone(p1), t) ∧
+
+¬HoldsAt(Idle(p2), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧ f = BusySignal(p) ∧ HoldsAt(BusySignal(p), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧ f = Ringing(p1, p2) ∧
+
+HoldsAt(Ringing(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = PickUp(a, p2) ∧
+
+f = Ringing(p1, p2) ∧
+
+HoldsAt(Ringing(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p1) ∧
+
+f = Connected(p1, p2) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p1, p2 (e = SetDown(a, p2) ∧
+
+f = Connected(p1, p2) ∧
+
+HoldsAt(Connected(p1, p2), t)) ∨
+
+∃a, p (e = SetDown(a, p) ∧
+
+f = Disconnected(p) ∧
+
+HoldsAt(Disconnected(p), t))
+
+¬Releases(e, f , t)
+
+(3.37)
+
+56
+
+CHAPTER 3 The Effects of Events
+
+From CIRC[(cid:7); Happens] and Theorem 2.1, we have
+
+Happens(e, t) ⇔
+(e = PickUp(Agent1, Phone1) ∧ t = 0) ∨
+(e = Dial(Agent1, Phone1, Phone2) ∧ t = 1) ∨
+(e = PickUp(Agent2, Phone2) ∧ t = 2)
+
+(3.38)
+
+From (3.32) (which follows from (3.38)), (3.25), (3.1) (which follows from (3.35)),
+and DEC9, we have
+
+HoldsAt(DialTone(Phone1), 1)
+
+(3.39)
+
+From (3.38) and (3.36), we have ¬∃e (Happens(e, 0) ∧ Terminates(e, Idle (Phone2),
+0)). From this, (3.25), (3.31), and DEC5, we have
+
+HoldsAt(Idle(Phone2), 1)
+
+(3.40)
+
+From (3.33) (which follows from (3.38)), (3.39), (3.40), (3.5) (which follows from
+(3.35)), and DEC9, we have HoldsAt(Ringing(Phone1, Phone2), 2). From this, (3.34)
+(which follows from (3.38)), (3.15) (which follows from (3.35)), and DEC9, we have
+(cid:2)
+HoldsAt(Connected(Phone1, Phone2), 3).
+
+3.2 EFFECT AXIOM IDIOMS
+
+In this section, we present several commonly used idioms involving effect axioms.
+
+Setting and resetting
+One event sets a fluent; another event resets the fluent. If o is set, then o will be on,
+whereas, if o is reset, then o will no longer be on:
+
+Initiates(Set(o), On(o), t)
+
+Terminates(Reset(o), On(o), t)
+
+Flipping
+An event flips the truth value of a fluent. If o is not on and o is flipped, then o will be
+on, but, if o is on and o is flipped, then o will no longer be on:
+
+¬HoldsAt(On(o), t) ⇒ Initiates(Flip(o), On(o), t)
+
+HoldsAt(On(o), t) ⇒ Terminates(Flip(o), On(o), t)
+
+Selection
+An event selects from among a number of values. If the value is v1 and the value v2
+is selected, then the value will be v2 and will no longer be v1:
+
+Initiates(Select(o, v2), Value(o, v2), t)
+
+3.3 Preconditions
+
+57
+
+HoldsAt(Value(o, v1), t) ∧ v1 (cid:8)= v2 ⇒
+Terminates(Select(o, v2), Value(o, v1), t)
+
+We may wish to represent explicitly that a value is changed from one value to
+another:
+
+Initiates(Change(o, v1, v2), Value(o, v2), t)
+
+HoldsAt(Value(o, v1), t) ∧ v1 (cid:8)= v2 ⇒
+Terminates(Change(o, v1, v2), Value(o, v1), t)
+
+Functional modiﬁcation
+An event modifies a value by applying some function. If the value is v and the function
+F is applied, then the value will be F(v):
+
+HoldsAt(Value(o, v), t) ⇒
+Initiates(ApplyF(o), Value(o, F(v)), t)
+
+HoldsAt(Value(o, v), t) ∧ v (cid:8)= F(v) ⇒
+Terminates(ApplyF(o), Value(o, v), t)
+
+A common example is incrementing a value:
+
+HoldsAt(Value(o, v), t) ⇒ Initiates(Increment(o), Value(o, v + 1), t)
+HoldsAt(Value(o, v), t) ⇒ Terminates(Increment(o), Value(o, v), t)
+
+Many-to-many mapping
+In general, the mapping between events and fluents is many-to-many. One event may
+initiate (or terminate) many fluents:
+
+Initiates(E(o), F1(o), t)
+Initiates(E(o), F2(o), t)
+
+Many events may initiate (or terminate) one fluent:
+
+Initiates(E1(o), F(o), t)
+Initiates(E2(o), F(o), t)
+
+3.3 PRECONDITIONS
+
+Consider the action of turning on a device. We might represent this as follows:
+
+Initiates(TurnOn(a, d), On(d), t)
+
+That is, if an agent turns on a device, then the device will be on. But there are many
+things that may prevent the device from going on. The device might be unplugged,
+it might be broken, its on-off switch might be broken, and so on. A condition that
+prevents an event from having its intended effects, or that prevents an event from
+occurring, is called a qualification. An event is said to be qualified whenever one or
+more of its qualifications are true. The problem of representing and reasoning about
+qualifications is known as the qualification problem.
+
+58
+
+CHAPTER 3 The Effects of Events
+
+A partial solution to the qualification problem is to use preconditions. (Other
+solutions are to use state constraints, which are described in Section 3.4, and default
+reasoning, which is discussed in Chapter 12.) In this section we describe two types
+of preconditions for events: fluent preconditions and action preconditions. Fluent
+preconditions allow us to represent qualifications that prevent events from having
+their intended effects; action preconditions allow us to represent qualifications that
+prevent events from occurring.
+
+3.3.1 FLUENT PRECONDITIONS
+
+A fluent precondition is a requirement that must be satisfied for the occurrence of an
+event to have an effect. An event whose fluent precondition is not satisfied may occur,
+but the event will not have the intended effect.
+Definition 3.3. If γ is a condition, α is an event term, β is a fluent term, and τ is a
+timepoint term, then
+
+γ ⇒ Initiates(α, β, τ )
+
+and
+
+γ ⇒ Terminates(α, β, τ )
+are fluent precondition axioms. We say that γ is a fluent precondition of α. A fluent
+precondition axiom is the same thing as an effect axiom.
+
+For example, if an agent turns on a device, then, provided the device is not broken,
+
+the device will be on:
+
+¬HoldsAt(Broken(d), t) ⇒ Initiates(TurnOn(a, d), On(d), t)
+
+If a device is broken, then the event of turning on the device can occur, but it will not
+have the intended effect.
+
+3.3.2 ACTION PRECONDITIONS
+
+An action precondition is a requirement that must be satisfied for the occurrence of
+an event. An event whose action precondition is not satisfied cannot occur.
+Definition 3.4. If γ is a condition, α is an event term, and τ is a timepoint term, then
+Happens(α, τ ) ⇒ γ
+
+is an action precondition axiom. We say that γ is an action precondition of α.
+
+By contraposition this is equivalent to ¬γ ⇒ ¬Happens(α, τ ). Thus, if an event
+
+occurs whose action precondition is not true, then inconsistency arises.
+
+Action precondition axioms provide an elaboration-tolerant way of expressing
+qualifications. Whenever we wish to add a qualification, we may simply add an
+action precondition axiom. Fluent precondition axioms can also be made elaboration
+tolerant by using default reasoning, as discussed in Section 12.4.
+
+3.4 State constraints
+
+59
+
+3.3.3 EXAMPLE: WALKING THROUGH A DOOR
+
+Suppose that in order for an agent to walk through a door, the agent must be near
+the door:
+
+Happens(WalkThroughDoor(a, d), t) ⇒ HoldsAt(Near(a, d), t)
+
+(3.41)
+
+Suppose further that Nathan is not near a door and walks through a door:
+
+¬HoldsAt(Near(Nathan, Door), 1)
+Happens(WalkThroughDoor(Nathan, Door), 1)
+
+(3.42)
+(3.43)
+
+We then get inconsistency.
+Proposition 3.2. The conjunction of (3.41)–(3.43) is inconsistent.
+Proof. From (3.43) and (3.41), we have HoldsAt(Near(Nathan, Door), 1), which
+(cid:2)
+contradicts (3.42).
+
+3.4 STATE CONSTRAINTS
+
+Some properties of the world follow other properties in a lawlike fashion. We
+represent relationships that hold among properties over all timepoints using state
+constraints.
+Definition 3.5. If γ1 and γ2 are conditions, then γ1, γ1 ⇒ γ2, and γ1 ⇔ γ2 are state
+constraints.
+
+Table 3.1 shows some typical state constraints involving one, two, and three or
+
+more fluents. In this section, we describe some sample uses of state constraints.
+
+Irreﬂexive and antisymmetric relation
+Suppose we have a fluent On(o1, o2), which represents that an object o1 is on top of
+an object o2. We can use state constraints to specify that On denotes an irreflexive
+and antisymmetric relation. That is, an object can never be on top of itself:
+
+¬HoldsAt(On(o, o), t)
+
+and, if one object o1 is on top of another object o2, then o2 cannot also be on top
+of o1:
+
+HoldsAt(On(o1, o2), t) ∧ o1 (cid:8)= o2 ⇒ ¬HoldsAt(On(o2, o1), t)
+
+Functional and total relation
+Consider a fluent At(o, l), which represents that object o is located at location l. We
+may specify that At denotes a functional and total relation. An object is in at most
+one location at a time:
+
+HoldsAt(At(o, l1), t) ∧ HoldsAt(At(o, l2), t) ⇒ l1 = l2
+
+and, at all times, every object has a location:
+
+∃l HoldsAt(At(o, l), t)
+
+State constraints can be used to address the qualification problem, as demonstrated
+in the following example: Let Occupies(p, s) represent that a chess piece p occupies
+
+60
+
+CHAPTER 3 The Effects of Events
+
+Table 3.1 Typical State Constraints
+
+State Constraint
+
+Axiom
+
+Reﬂexive relation
+Irreﬂexive relation
+Symmetric relation
+Antisymmetric relation
+
+Transitive relation
+
+Intransitive relation
+
+Trichotomous relation
+Total relation
+Functional relation
+Surjective relation
+Injective relation
+Negation
+
+Converse
+Composite
+
+Union
+
+Intersection
+
+Exactly one
+
+HoldsAt(R(a, a), t)
+¬HoldsAt(R(a, a), t)
+HoldsAt(R(a, b), t) ⇒ HoldsAt(R(b, a), t)
+HoldsAt(R(a, b), t) ∧ a (cid:8)= b ⇒
+¬HoldsAt(R(b, a), t)
+HoldsAt(R(a, b), t) ∧ HoldsAt(R(b, c), t) ⇒
+HoldsAt(R(a, c), t)
+HoldsAt(R(a, b), t) ∧ HoldsAt(R(b, c), t) ⇒
+¬HoldsAt(R(a, c), t)
+HoldsAt(R(a, b), t) ˙∨ HoldsAt(R(b, a), t) ˙∨ a = b
+∃b HoldsAt(R(a, b), t)
+HoldsAt(R(a, b), t) ∧ HoldsAt(R(a, c), t) ⇒ b = c
+∃a HoldsAt(R(a, b), t)
+HoldsAt(R(a, c), t) ∧ HoldsAt(R(b, c), t) ⇒ a = b
+HoldsAt(R(a1, . . . , an), t) ⇔
+¬HoldsAt(S(a1, . . . , an), t)
+HoldsAt(R(a, b), t) ⇔ HoldsAt(S(b, a), t)
+HoldsAt(R(a, b), t) ∧ HoldsAt(S(b, c), t) ⇔
+HoldsAt(T(a, c), t)
+HoldsAt(R(a1, . . . , an), t) ⇔
+HoldsAt(S1(a1, . . ., an), t) ∨ · · · ∨
+HoldsAt(Sk(a1, . . ., an), t)
+HoldsAt(R(a1, . . . , an), t) ⇔
+HoldsAt(S1(a1, . . ., an), t) ∧ · · · ∧
+HoldsAt(Sk(a1, . . ., an), t)
+HoldsAt(R1(a1, . . . , an), t) ˙∨ · · · ˙∨
+HoldsAt(Rk(a1, . . ., an), t)
+
+a square s of a chessboard. We wish to represent that it is not possible to move a
+piece onto a square that is already occupied. We may do this by specifying that
+Occupies denotes an injective relation. That is, at most one piece occupies a square at
+a time:
+
+HoldsAt(Occupies(p1, s), t) ∧ HoldsAt(Occupies(p2, s), t) ⇒ p1 = p2
+
+A state constraint used to represent a qualification that prevents an event from
+occurring is called a qualification constraint. State constraints provide an elaboration-
+tolerant way of expressing qualifications because, whenever we wish to add a
+qualification, we may simply add a state constraint.
+
+Negation
+We may wish to specify that one fluent represents the negation of another fluent. An
+example is the fact that a device is off if and only if it is not on:
+
+HoldsAt(Off (d), t) ⇔ ¬HoldsAt(On(d), t)
+
+3.4 State constraints
+
+61
+
+Intersection
+A light is lit if and only if it is on and not broken:
+
+HoldsAt(Lit(l), t) ⇔ HoldsAt(On(l), t) ∧ ¬HoldsAt(Broken(l), t)
+
+Exactly one
+At all times, a person is either lying, sitting, or standing:
+
+HoldsAt(Lying(p), t) ˙∨
+HoldsAt(Sitting(p), t) ˙∨
+HoldsAt(Standing(p), t)
+
+(3.44)
+
+3.4.1 EXAMPLE: TELEPHONE REVISITED
+
+An important use of state constraints is to simplify the specification of initial
+conditions. We can use state constraints to tighten up the telephone axiomatization
+given in Section 3.1.1.
+
+We add several axioms. A phone cannot be ringing itself:
+
+¬HoldsAt(Ringing(p, p), t)
+
+If phone p1 is ringing phone p2, then p2 cannot be ringing p1:
+HoldsAt(Ringing(p1, p2), t) ∧ p1 (cid:8)= p2 ⇒
+¬HoldsAt(Ringing(p2, p1), t)
+
+A phone cannot be connected to itself:
+
+¬HoldsAt(Connected(p, p), t)
+
+If phone p1 is connected to phone p2, then p2 cannot be connected to p1:
+
+HoldsAt(Connected(p1, p2), t) ∧ p1 (cid:8)= p2 ⇒
+¬HoldsAt(Connected(p2, p1), t)
+
+(3.45)
+
+(3.46)
+
+(3.47)
+
+(3.48)
+
+At any time, a phone either is idle, has a dial tone, has a busy signal, is ringing
+another phone, is being rung by another phone, is connected to another phone, or
+is disconnected:
+
+(3.49)
+
+HoldsAt(Idle(p), t) ˙∨
+HoldsAt(DialTone(p), t) ˙∨
+HoldsAt(BusySignal(p), t) ˙∨
+∃p1 HoldsAt(Ringing(p, p1), t) ˙∨
+∃p1 HoldsAt(Ringing(p1, p), t) ˙∨
+∃p1 HoldsAt(Connected(p, p1), t) ˙∨
+∃p1 HoldsAt(Connected(p1, p), t) ˙∨
+HoldsAt(Disconnected(p), t)
+
+62
+
+CHAPTER 3 The Effects of Events
+
+These state constraints simplify specification of initial conditions. For example, from
+HoldsAt(Idle(Phone1), 0), HoldsAt(Idle(Phone2), 0), (3.45), (3.46), (3.47), (3.48),
+and (3.49), we have all of the following:
+
+¬HoldsAt(DialTone(Phone1), 0)
+¬HoldsAt(BusySignal(Phone1), 0)
+¬HoldsAt(Ringing(Phone1, Phone1), 0)
+¬HoldsAt(Ringing(Phone1, Phone2), 0)
+¬HoldsAt(Connected(Phone1, Phone1), 0)
+¬HoldsAt(Connected(Phone1, Phone2), 0)
+¬HoldsAt(Disconnected(Phone1), 0)
+¬HoldsAt(DialTone(Phone2), 0)
+¬HoldsAt(BusySignal(Phone2), 0)
+¬HoldsAt(Ringing(Phone2, Phone2), 0)
+¬HoldsAt(Ringing(Phone2, Phone1), 0)
+¬HoldsAt(Connected(Phone2, Phone2), 0)
+¬HoldsAt(Connected(Phone2, Phone1), 0)
+¬HoldsAt(Disconnected(Phone2), 0)
+
+Therefore, we no longer have to specify these initial conditions explicitly.
+
+BIBLIOGRAPHIC NOTES
+GPS
+An early problem-solving program was GPS (Newell & Simon, 1961). GPS uses
+subgoaling to find a sequence of operators that transforms an object from an initial
+state into a goal state. The subgoal to transform an object a into an object b is achieved
+as follows:
+
+If a and b are the same, return with success.
+
+1.
+2. Find a difference d between a and b.
+3.
+4. Recursively invoke subgoal to transform a(cid:9) into b.
+
+Invoke subgoal to reduce d between a and b, producing a(cid:9).
+
+The subgoal to reduce d between a and b is achieved as follows:
+1. Select relevant operator (action) o.
+2.
+
+Invoke subgoal to apply o to a, producing a(cid:9).
+
+The subgoal to apply o to a is achieved as follows:
+
+1.
+
+If a is not of the required form c for the application of o, then
+(a) Find a difference d between a and c.
+Invoke subgoal to reduce d between a and c, producing a(cid:9).
+(b)
+(c) Recursively invoke subgoal to apply o to a(cid:9), producing a(cid:9)(cid:9).
+
+2. Otherwise, apply o to a, producing a(cid:9).
+
+Bibliographic notes
+
+63
+
+GPS evolved into the SOAR problem-solving and learning architecture (Rosenbloom,
+Laird, & Newell, 1993).
+
+QA3
+An early program for reasoning about action and change was QA3 (Green, 1969).
+The program uses a version of the situation calculus to represent knowledge and uses
+resolution theorem proving (Robinson, 1965) to solve planning problems such as
+McCarthy’s (1963) monkey and bananas problem.
+
+STRIPS
+Another early program for reasoning about action and change was STRIPS (Fikes
+& Nilsson, 1971; Fikes, Hart, & Nilsson, 1972a, 1972b). STRIPS solves planning
+problems. It takes a set of operator descriptions, a goal formula, and an initial world
+model given by a set of formulas and produces a sequence of operators that transforms
+the initial world model into a model in which the goal is true. An operator description
+consists of a precondition, a delete list, and an add list. The precondition specifies the
+conditions under which the operator is applicable, the delete list specifies the formulas
+that are deleted by the operator, and the add list specifies the formulas that are added
+by the operator. STRIPS deals with the commonsense law of inertia by making the
+assumption that, when an operator is applied, any formulas not deleted or added by
+the operator stay the same. This is called the STRIPS assumption by Waldinger (1977,
+p. 120). Lifschitz (1987b) formalizes the semantics of STRIPS. A STRIPS operator
+description
+
+Operator: o
+
+Precondition: c
+Delete list: d1, . . . , dn
+Add list: a1, . . . , an
+
+is similar to the set of event calculus formulas
+
+c ⇒ Terminates(o, d1, t)
+...
+c ⇒ Terminates(o, dn, t)
+c ⇒ Initiates(o, a1, t)
+...
+c ⇒ Initiates(o, an, t)
+
+Inconsistency
+In EC and DEC, simultaneously initiating and terminating a fluent produces incon-
+sistency. This is also the case in most of the versions of the classical logic event
+calculus (Shanahan, 1996, 1997b, 1999a, 2004). But in the basic axiomatization of
+
+64
+
+CHAPTER 3 The Effects of Events
+
+the event calculus of R. Miller and Shanahan (1999, pp. 1-3; 2002, pp. 453-455)
+(not the particular version of R. Miller and Shanahan used in this book called EC),
+simultaneously initiating and terminating a fluent results in two classes of models:
+one in which the fluent is true and one in which the fluent is false. This can be used
+to represent nondeterminism. R. Miller and Shanahan (2002, pp. 459 and 460) give
+the following example:
+
+Initiates(TossCoin, HeadsUp, t)
+Terminates(TossCoin, HeadsUp, t)
+Happens(TossCoin, 2)
+
+(Nondeterminism can still be represented with EC and DEC using release axioms
+as discussed in Section 5.2, determining fluents as discussed in Section 9.1, or
+disjunctive event axioms as discussed in Section 9.2.)
+
+Qualiﬁcation problem
+The qualification problem was first described by McCarthy and Hayes (1969, p. 489).
+They considered the problem of how to represent exceptions to statements about
+the effects of looking up and dialing a person’s telephone number. The phrase
+“qualification problem” appears to have been first used in print by Hayes (1973,
+p. 56). He uses the example of a robot that concludes that it can drive to the airport
+and then notices a flat tire. McCarthy (1977, p. 1040) presents the qualification
+problem and discusses the countless ways a boat could be prevented from crossing
+a river in the missionaries and cannibals problem. The qualification problem is
+also discussed by McCarthy (1980, pp. 27 and 28; 1987, p. 1033) and Hayes
+(1971, pp. 515 and 516). Our definitions of qualifications, qualified events, and
+the qualification problem are from Kvarnström and Doherty (2000a). Ginsberg
+and Smith (1987a, 1988a) propose the use of state constraints for representing
+qualifications, and F. Lin and Reiter (1994, section 2) call these “qualification
+constraints.”
+
+Preconditions
+The distinction between action preconditions and fluent preconditions is from
+R. Miller and Shanahan (2002, p. 464). Baral (1995) makes a similar distinction
+between an “executability condition of an action” and “preconditions of effects”
+(p. 2017). Our representation of an action precondition axiom is from Shanahan
+and Witkowski (2004). This representation must be used with caution when solving
+abduction or planning problems, as pointed out by R. Miller and Shanahan (2002,
+p. 465): If the initial situation is not completely specified, then Happens(event, time)
+becomes a plan for achieving the precondition.
+
+State constraints
+McCarthy and Hayes (1969, p. 478) give the following transitive law in the situation
+calculus:
+
+∀x. ∀y . ∀z . ∀s . in(x, y, s) ∧ in(y, z, s) ⊃ in(x, z, s)
+
+Exercises
+
+65
+
+Green (1969) introduces a kind of axiom that represents “an implication that holds
+for a fixed state” (p. 78). State constraints (Genesereth & Nilsson, 1987, p. 267) are
+also called “domain constraints” (Ginsberg & Smith, 1987b, p. 237). E. Davis (1990)
+calls state constraints “state coherence axioms” (p. 193). Such constraints in the event
+calculus are discussed by Shanahan (1995a, pp. 255, 262; 1996, p. 685; 1997b, pp.
+11, 39, 40, 275, 285, 286, 323, and 324; 1999a, pp. 417-419). Reiter (2001, pp. 401-
+406) discusses the treatment of state constraints in the situation calculus. Doherty,
+Gustafsson, Karlsson, and Kvarnström (1998, p. 16) discuss domain constraints in
+temporal action logics. Gustafsson and Doherty (1996) call state constraints that
+mention multiple timepoints “transition constraints” (p. 92). They give an example
+that in the event calculus is represented as
+
+¬HoldsAt(Alive(a), t) ⇒ ¬HoldsAt(Alive(a), t + 1)
+
+EXERCISES
+3.1 Write an axiom to formalize that a person who eats is no longer hungry.
+3.2 Write an axiom to formalize the following. If two agents are in the same
+
+room, the first agent is listening to the second agent, and the first agent tells
+the second agent a fact, then the second agent will know that fact.
+
+3.3 Using the axiom written in Exercise 3.2, prove that, if Nathan and Ryan are in
+
+the same room, Ryan is listening to Nathan, and Nathan tells Ryan a
+particular fact, then Ryan will know that fact.
+
+3.4
+
+3.5
+
+3.6
+
+3.7
+
+3.8
+
+Formalize that if an agent is outside, it is cold outside, and the agent is not
+wearing a coat, then the agent is cold. Incorporate other weather conditions
+such as rain. Include axioms for putting on and taking off a coat.
+
+Formalize the opening of a book to a particular page number and the closing
+of a book.
+
+Formalize the formation and dissolution of interpersonal relationships such as
+friendship and marriage (Dyer, 1983; Schank & Abelson, 1977).
+
+Simple axioms for waking up and falling asleep are given in Section 2.7.1.
+Create a more detailed formalization of the human sleep cycle. Incorporate
+getting out of bed, getting tired, lying in bed, and waiting to fall asleep.
+
+Formalize lighting and putting out a fire.
+
+3.9
+
+State constraint (3.44) says that a person is either lying, sitting, or standing.
+Add appropriate event predicates, fluent predicates, and axioms to formalize
+lying down on something, sitting down on something, and standing up.
+3.10 Write state constraints relating various expressions for time of day, such as
+
+daytime, nighttime, morning, afternoon, and evening.
+
+66
+
+CHAPTER 3 The Effects of Events
+
+3.11 Are there any bugs in the formalization of a telephone in Sections 3.1.1
+
+and 3.4.1? Consider the following scenarios:
+
+• Two agents dial one another simultaneously.
+• One agent dials another agent at the same instant that the other agent picks
+
+up the phone.
+
+3.12 Prove Proposition 3.1 using the conjunction of axioms EC instead of the
+
+conjunction of axioms DEC.
+
+

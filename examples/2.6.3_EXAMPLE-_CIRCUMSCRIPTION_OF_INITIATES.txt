@@ -1,0 +1,41 @@
+CIRC[(cid.13); Initiates] by rewriting (cid.13) as compute and then applying Theorem 2.1, which gives Numerous examples of computing circumscription are given in the remainder of this book.
+
+We solve commonsense reasoning problems by creating an event calculus domain description. A domain description consists of the following.
+
+• • • a collection of axioms describing the commonsense domain or domains of interest, called an axiomatization observations of world properties at various times a narrative of known world events be extended to handle new scenarios or phenomena. John McCarthy defines a axiomatization to be extended through the addition of new axioms rather than by performing surgery on existing axioms. Circumscription helps provide elaboration tolerance in the event calculus because it enables the incorporation of new event effects and occurrences by adding axioms. The types of axioms we may use to describe commonsense domains are summarized in Table 2.1 and described in detail in the rest of this book.
+
+Observations consist of HoldsAt and ReleasedAt formulas.
+
+Definition 2.7. If β is a fluent term and τ is a timepoint term, then HoldsAt(β, τ ) and ReleasedAt(β, τ ) are observations.
+
+A narrative consists of event occurrence formulas and temporal ordering formulas that constrain their order.
+
+Definition 2.8. If α is an event term and τ is a timepoint term, then Happens(α, τ ) is an event occurrence formula.
+
+Table 2.1 Event Calculus Formulas Used for Commonsense Reasoninga Deﬁned in Formula Form Unique names axiom [(cid.14)] Observation [(cid.8)] Event occurrence formula [(cid.12)1] Temporal ordering formula [(cid.12)1] Positive effect axiom [(cid.13)] Negative effect axiom [(cid.13)] Fluent precondition axiom [(cid.13)] Action precondition axiom [(cid.16)] State constraint [(cid.16)] Trigger axiom [(cid.12)2] Release axiom [(cid.13)] Effect constraint [(cid.13)] Causal constraint [(cid.12)2] Trajectory axiom [(cid.18)] Antitrajectory axiom [(cid.18)] Event occurrence constraint [(cid.16)] Positive cumulative effect axiom [(cid.13)] Negative cumulative effect axiom [(cid.13)] Disjunctive event axiom [(cid.12)2] U[φ1, . . . , φn] (¬)HoldsAt(β, τ ) or (¬)ReleasedAt(β, τ ) Section 2.4.1 Section 2.7 Section 2.7 Section 2.7 θ(β, τ ) ∧ AntiTrajectory(β1, τ1, β2, τ2) (¬)Happens(α2, τ ) γ ∧ (¬)Happens(α1, τ ) ∧ · · · ∧ γ ∧ (¬)Happens(α1, τ ) ∧ · · · ∧ Happens(α1, τ ) ∨ · · · ∨ Section 3.1 Section 3.1 Section 3.3.1 Section 3.3.2 Section 3.4 Section 4.1 Section 5.3 Section 6.4 Section 6.5 Section 7.1 Section 7.2 Section 8.1.2 Section 8.2 Section 8.2 Section 9.2 Cancellation axiom [(cid.19)] Section 12.3 parisons.
+
+We now define a domain description.
+
+Definition 2.11. An event calculus domain description is given by CIRC[(cid.13); Initiates, Terminates, Releases] ∧ CIRC[(cid.12)1 ∧ (cid.12)2; Happens] ∧ CIRC[(cid.19); Ab1, . . . , Abn] ∧ (cid.14) ∧ (cid.16) ∧ (cid.18) ∧ (cid.8) ∧ E ∧ CC where • (cid.13) is a conjunction of positive effect axioms, negative effect axioms, release axioms, effect constraints, positive cumulative effect axioms, and negative cumulative effect axioms.
+
+• (cid.12)1 is a conjunction of event occurrence formulas and temporal ordering formulas (the narrative).
+
+• (cid.12)2 is a conjunction of trigger axioms, causal constraints, and disjunctive event axioms.
+
+• (cid.19) is a conjunction of cancellation axioms containing Ab1, . . . , Abn.
+
+• (cid.14) is a conjunction of unique names axioms.
+
+• (cid.16) is a conjunction of state constraints, action precondition axioms, and event occurrence constraints.
+
+• (cid.18) is a conjunction of trajectory axioms and antitrajectory axioms.
+
+• (cid.8) is a conjunction of observations.
+
+• E is a conjunction of axioms such as EC or DEC.
+
+• CC is the conjunction of axioms to support causal constraints defined in Section 6.5.
+
+The axiomatization consists of (cid.13), (cid.12)2, (cid.19), (cid.14), (cid.16), (cid.18), E, and CC, the observations consist of (cid.8), and the narrative consists of (cid.12)1. We write (cid.12) to mean the conjunction of (cid.12)1 and (cid.12)2.
+
+scriptions make use of circumscription.

@@ -1,0 +1,13 @@
+Shanahan showed that if the circuit is modified to that shown in Figure 6.2, then an axiomatization of the circuit using causal constraints as in Section 6.5 produces inconsistency. We can properly represent the behavior of this circuit using trigger axioms. The circuit implements a buzzer that is turned on and off with S1; we ignore the light in this discussion. A moment after S1 is closed, relay R is activated. A moment after R is activated, S2 is open. A moment after S2 is open, R is not activated.
+
+A moment after relay R is not activated, S2 is closed. A moment after S2 is closed, S2 R S1 S3 B L FIGURE 6.2 Shanahan’s circuit (Shanahan, 1996b, p. 145).
+
+R is activated again. The cycle repeats. In a real circuit, the result of a relay quickly and repeatedly activating and deactivating is a buzzing sound.
+
+We have the following trigger axioms.
+
+¬HoldsAt(Lit(L), t) ∧ HoldsAt(Closed(S1), t) ∧ HoldsAt(Lit(L), t) ∧ HoldsAt(Closed(S2), t) ∧ ¬HoldsAt(Activated(R), t) ∧ HoldsAt(Closed(S1), t) ∧ HoldsAt(Closed(S2), t) ∧ HoldsAt(Activated(R), t) ∧ (¬HoldsAt(Closed(S1), t) ∨ ¬HoldsAt(Closed(S2), t) ∨ We add the following effect axiom to those already given.
+
+We use the observations and narrative as detailed before.
+
+With the conjunction of axioms EC, the circuit buzzes with infinite frequency, whereas with the conjunction of axioms DEC, it buzzes with finite frequency. Using DEC, we can show that R activates at timepoint 1, S2 opens at timepoint 2, and R deactivates at timepoint 3.

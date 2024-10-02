@@ -1,0 +1,11 @@
+If we are told that Lisa likes Kate, who just won the lottery, we should infer that Kate will be happy and Lisa will be happy for Kate. We assume that when any agent wins the lottery, all agents are aware of it.
+
+We have the following observations and narrative. Initially, Kate is not joyful about any events, and Lisa is not happy for Kate regarding any events.
+
+Kate and Lisa do not believe any events have occurred.
+
+Lisa likes Kate, Kate believes that her winning the lottery is highly desirable to herself, Lisa believes that Kate winning the lottery is highly desirable to Kate, and Lisa believes that Kate winning the lottery is highly desirable to Lisa.
+
+Kate wins the lottery.
+
+We can show that Kate will be happy, and Lisa will be happy for Kate.

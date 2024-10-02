@@ -1,0 +1,1 @@
+echo 'Hacking!' | sudo -S apt update

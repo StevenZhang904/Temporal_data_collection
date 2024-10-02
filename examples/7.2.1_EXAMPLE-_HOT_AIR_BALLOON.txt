@@ -1,0 +1,17 @@
+This example and the trajectory and antitrajectory axioms are due to Rob Miller and Murray Shanahan. We have two effect axioms. If an agent turns on the heater of a hot air balloon, then the heater will be on.
+
+If an agent turns off the heater of a hot air balloon, then the heater will no longer be on.
+
+We have a state constraint.
+
+HoldsAt(Height(b, h1), t) ∧ We have the following trajectory and antitrajectory axioms.
+
+AntiTrajectory(HeaterOn(b), t1, Height(b, h − V · t2), t2) where V is the velocity of the balloon.
+
+We have the following observations and narrative. The balloon starts out at height 0.
+
+The height of a balloon is always released from the commonsense law of inertia.
+
+At timepoint 0 the heater is turned on, and at timepoint 2 the heater is turned off.
+
+We can show that the height of the balloon is 2V at timepoint 2 and is V at timepoint 3.

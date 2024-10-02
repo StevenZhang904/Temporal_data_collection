@@ -1,0 +1,17 @@
+Given that Nathan was not awake and then he was awake, we can abduce that he woke up. Abduction can be performed using answer set programming. We create a file called sleep.pl containing the following.
+
+time(0).
+
+fluent(awake(nathan)).
+
+event(wakeUp(nathan)).
+
+event(fallAsleep(nathan)).
+
+holdsAt(awake(nathan),1).
+
+clingo version 4.2.1 Reading from sleep.lp Solving...
+
+Answer. 1 time(0) fluent(awake(nathan)) event(wakeUp(nathan)) event(fallAsleep(nathan)) holdsAt(awake(nathan),1) initiated(awake(nathan),0) happens(wakeUp(nathan),0) SATISFIABLE Models Calls Time CPU Time . 0.000s . 1 . 1 . 0.002s (Solving. 0.00s 1st Model. 0.00s Unsat. 0.00s) stable model in which happens(wakeUp(nathan),0) is abduced.
+
+2.8.4 POSTDICTION

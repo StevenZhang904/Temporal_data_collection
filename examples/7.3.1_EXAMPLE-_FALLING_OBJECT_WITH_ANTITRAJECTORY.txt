@@ -1,0 +1,5 @@
+Consider again the example of the falling object. First, we state that the height of an object is always released from the commonsense law of inertia.
+
+Then, we replace (7.7) and (7.11) with AntiTrajectory(Falling(o), t1, Height(o, h), t2) That is, when an object stops falling, its height stays constant.
+
+We can show that the apple hits the ground at timepoint 1, and has a height of zero at timepoint 2.

@@ -1,0 +1,29 @@
+We perform complex commonsense reasoning about the effects of events whenever an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing, we expect to be connected to the caller.
+
+We can represent our knowledge about telephones using positive and negative effect axioms. If an agent picks up an idle phone, the phone will have a dial tone and will no longer be idle.
+
+After picking up a phone, an agent may decide not to place a call. If an agent sets down a phone with a dial tone, the phone will be idle and will no longer have a dial tone.
+
+When phone p1 has a dial tone and an agent dials phone p2 from p1, what happens depends on the state of p2. If p2 is idle, then p1 will be ringing p2, p1 will no longer have a dial tone, and p2 will no longer be idle.
+
+If p2 is not idle, then p1 will have a busy signal.
+
+If an agent sets down a phone with a busy signal, then the phone will be idle and will no longer have a busy signal.
+
+A call may go unanswered. If phone p1 is ringing phone p2 and an agent sets down p1, then p1 will be idle, p2 will be idle, and p1 will no longer be ringing p2.
+
+A call may be answered. If phone p1 is ringing phone p2 and an agent picks up p2, then p1 will be connected to p2 and p1 will no longer be ringing p2.
+
+A call may be completed. If phone p1 is connected to phone p2 and an agent sets down p1, then p1 will be idle, p2 will be disconnected, and p1 will no longer be connected to p2.
+
+Similarly, if phone p1 is connected to phone p2 and an agent sets down p2, then p2 will be idle, p1 will be disconnected, and p1 will no longer be connected to p2.
+
+If an agent sets down a phone that is disconnected, then the phone will be idle and the phone will no longer be disconnected.
+
+Let us now use this axiomatization to solve a particular reasoning problem. We start by specifying some observations. At timepoint 0, all phones are idle, no phones have a dial tone or busy signal, no phones are ringing other phones, no phones are connected to other phones, and no phones are disconnected.
+
+We specify that fluents are never released from the commonsense law of inertia.
+
+We specify a narrative. One agent picks up the phone and dials another agent, and then the other agent answers.
+
+We can then show that the two agents will be connected.

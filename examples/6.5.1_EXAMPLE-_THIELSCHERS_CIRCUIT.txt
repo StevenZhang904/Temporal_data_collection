@@ -1,0 +1,7 @@
+We now show how causal constraints can be used to deal properly with Thielscher’s circuit. Our axiomatization of the circuit is the same as Shanahan’s, except that we use events such as Close(S1) instead of Close1, use fluents such as Closed(S1) instead of Switch1, and have axioms for opening and closing all switches.
+
+We use the observations and narrative just discussed, and we have the following effect axioms.
+
+We have the following causal constraints.
+
+Stopped(Lit(L), t) ∧ Initiated(Closed(S1), t) ∧ Started(Closed(S2), t) ∧ Stopped(Activated(R), t) ∧ Initiated(Closed(S1), t) ∧ Given this axiomatization we can show that after switch S1 is closed, light L will not be lit.

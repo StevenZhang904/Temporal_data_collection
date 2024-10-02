@@ -1,0 +1,37 @@
+Nathan and Ryan each throw a baseball into the air. A moment later, the baseballs collide.
+
+We treat this example using both relational and metric space. We start with some effect axioms. If an agent is holding an object and the agent throws the object into the air with a velocity vector (cid.11)vx, vy, vz(cid.12), where the z axis represents up, then the object will be flying with that velocity vector.
+
+If an agent is holding an object and the agent throws the object into the air, then the agent will no longer be holding the object.
+
+If an object is thrown into the air, then its location and velocity will no longer be subject to the commonsense law of inertia.
+
+Releases(Throw(a, o, vx, vy, vz), AT(o, x, y, z), t) Releases(Throw(a, o, vx1, vy1, vz1), Velocity(o, vx2, vy2, vz2), t) We specify the location and velocity of the flying object using the following trajectory axioms.
+
+HoldsAt(AT(o, x0, y0, z0), t) ∧ Gt2 Trajectory(Flying(o, vx, vy, vz), t1, AT(o, x1, y1, z1), t2) Trajectory(Flying(o, vx, vy, vz1), t1, Velocity(o, vx, vy, vz2), t2) We have state constraints that say that at any given moment an object has a unique velocity and is flying with a unique velocity.
+
+HoldsAt(Velocity(o, vx1, vy1, vz1), t) ∧ HoldsAt(Flying(o, vx1, vy1, vz1), t) ∧ We use a trigger axiom to represent that an elastic collision occurs when two flying objects are at the same location.
+
+HoldsAt(Flying(o1, v1x, v1y, v1z), t) ∧ HoldsAt(Flying(o2, v2x, v2y, v2z), t) ∧ HoldsAt(AT(o1, x, y, z), t) ∧ We use effect axioms to represent that, when object o1 elastically collides with object o2, object o1 assumes the velocity of o2.
+
+HoldsAt(Velocity(o1, v1x, v1y, v1z), t) ∧ That is, two elastically colliding objects exchange their velocities. We assume the objects are points of equal mass.
+
+Let us use the following observations and narrative. Initially, one baseball is at Nathan is holding the first baseball, and Ryan is holding the second baseball.
+
+Nathan and Ryan throw the baseballs toward one another. Nathan throws the first baseball with velocity (cid.11)1, 0, 0(cid.12), and Ryan throws the second baseball with velocity (cid.11) − 1, 0, 0(cid.12).
+
+We also have the fact that the two baseballs are not the same object.
+
+We can then show that the baseballs will collide. In order to show this, we must assume that the two baseballs are the only objects in the metric space.
+
+Without this assumption, either of the baseballs might first collide with some other object.
+
+We start with a lemma that states that, if object o1 collides with object o2, then o2 collides with o1.
+
+Proof. Let ω1 and ω2 be arbitrary objects, and τ be an arbitrary timepoint. We must show Suppose the following.
+
+CIRC[(cid.6); Happens] From (10.43) and Theorem 2.1, we have ∃v1x, v1y, v1z, v2x, v2y, v2z, x, y, z HoldsAt(Flying(o1, v1x, v1y, v1z), t) ∧ HoldsAt(Flying(o2, v2x, v2y, v2z), t) ∧ HoldsAt(AT(o1, x, y, z), t) ∧ From this and (10.44), we have.
+
+for some V1X, V1Y, V1Z, V2X, V2Y, V2Z, X, Y, and Z. From (10.46), (10.47), (cid.2) required.
+
+Now we show that the baseballs collide.

@@ -1,0 +1,7 @@
+Consider a camera with a flash unit. If a camera’s shutter is released at the same instant that its flash is triggered, then we have the cumulative effect that a properly exposed picture is taken.
+
+If a camera’s shutter is released and its flash is not triggered at the same instant, then an improperly exposed picture is taken.
+
+The shutter is released at timepoints 0 and 1, but only at timepoint 1 is the flash triggered.
+
+We can show that an improperly exposed picture is taken at timepoint 0 and that a properly exposed picture is taken at timepoint 1.

@@ -1,0 +1,136 @@
+3.1.1 EXAMPLE: TELEPHONE We perform complex commonsense reasoning about the effects of events whenever an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing, we expect to be connected to the caller.
+
+We can represent our knowledge about telephones using positive and negative effect axioms. If an agent picks up an idle phone, the phone will have a dial tone and will no longer be idle.
+
+After picking up a phone, an agent may decide not to place a call. If an agent sets down a phone with a dial tone, the phone will be idle and will no longer have a dial tone.
+
+When phone p1 has a dial tone and an agent dials phone p2 from p1, what happens depends on the state of p2. If p2 is idle, then p1 will be ringing p2, p1 will no longer have a dial tone, and p2 will no longer be idle.
+
+If p2 is not idle, then p1 will have a busy signal.
+
+If an agent sets down a phone with a busy signal, then the phone will be idle and will no longer have a busy signal.
+
+A call may go unanswered. If phone p1 is ringing phone p2 and an agent sets down p1, then p1 will be idle, p2 will be idle, and p1 will no longer be ringing p2.
+
+A call may be answered. If phone p1 is ringing phone p2 and an agent picks up p2, then p1 will be connected to p2 and p1 will no longer be ringing p2.
+
+A call may be completed. If phone p1 is connected to phone p2 and an agent sets down p1, then p1 will be idle, p2 will be disconnected, and p1 will no longer be connected to p2.
+
+Similarly, if phone p1 is connected to phone p2 and an agent sets down p2, then p2 will be idle, p1 will be disconnected, and p1 will no longer be connected to p2.
+
+If an agent sets down a phone that is disconnected, then the phone will be idle and the phone will no longer be disconnected.
+
+Let us now use this axiomatization to solve a particular reasoning problem. We start by specifying some observations. At timepoint 0, all phones are idle, no phones have a dial tone or busy signal, no phones are ringing other phones, no phones are connected to other phones, and no phones are disconnected.
+
+We specify that fluents are never released from the commonsense law of inertia.
+
+We specify a narrative. One agent picks up the phone and dials another agent, and then the other agent answers.
+
+We can then show that the two agents will be connected.
+
+3.3.3 EXAMPLE: WALKING THROUGH A DOOR Suppose that in order for an agent to walk through a door, the agent must be near the door.
+
+Suppose further that Nathan is not near a door and walks through a door.
+
+We then get inconsistency.
+
+3.4.1 EXAMPLE: TELEPHONE REVISITED An important use of state constraints is to simplify the specification of initial conditions. We can use state constraints to tighten up the telephone axiomatization given in Section 3.1.1.
+
+We add several axioms. A phone cannot be ringing itself.
+
+If phone p1 is ringing phone p2, then p2 cannot be ringing p1.
+
+A phone cannot be connected to itself.
+
+If phone p1 is connected to phone p2, then p2 cannot be connected to p1.
+
+At any time, a phone either is idle, has a dial tone, has a busy signal, is ringing another phone, is being rung by another phone, is connected to another phone, or is disconnected.
+
+HoldsAt(Idle(p), t) ˙∨ HoldsAt(DialTone(p), t) ˙∨ HoldsAt(BusySignal(p), t) ˙∨ ∃p1 HoldsAt(Ringing(p, p1), t) ˙∨ ∃p1 HoldsAt(Ringing(p1, p), t) ˙∨ ∃p1 HoldsAt(Connected(p, p1), t) ˙∨ ∃p1 HoldsAt(Connected(p1, p), t) ˙∨ These state constraints simplify specification of initial conditions. For example, from HoldsAt(Idle(Phone1), 0), HoldsAt(Idle(Phone2), 0), (3.45), (3.46), (3.47), (3.48), and (3.49), we have all of the following.
+
+Therefore, we no longer have to specify these initial conditions explicitly.
+
+BIBLIOGRAPHIC NOTES GPS subgoaling to find a sequence of operators that transforms an object from an initial state into a goal state. The subgoal to transform an object a into an object b is achieved as follows.
+
+If a and b are the same, return with success.
+
+1.
+
+2. Find a difference d between a and b.
+
+3.
+
+4. Recursively invoke subgoal to transform a(cid.9) into b.
+
+Invoke subgoal to reduce d between a and b, producing a(cid.9).
+
+The subgoal to reduce d between a and b is achieved as follows.
+
+1. Select relevant operator (action) o.
+
+2.
+
+Invoke subgoal to apply o to a, producing a(cid.9).
+
+The subgoal to apply o to a is achieved as follows.
+
+1.
+
+If a is not of the required form c for the application of o, then (a) Find a difference d between a and c.
+
+Invoke subgoal to reduce d between a and c, producing a(cid.9).
+
+(b) (c) Recursively invoke subgoal to apply o to a(cid.9), producing a(cid.9)(cid.9).
+
+2. Otherwise, apply o to a, producing a(cid.9).
+
+Bibliographic notes Laird, & Newell, 1993).
+
+QA3 An early program for reasoning about action and change was QA3 (Green, 1969).
+
+The program uses a version of the situation calculus to represent knowledge and uses resolution theorem proving (Robinson, 1965) to solve planning problems such as McCarthy’s (1963) monkey and bananas problem.
+
+STRIPS Another early program for reasoning about action and change was STRIPS (Fikes & Nilsson, 1971; Fikes, Hart, & Nilsson, 1972a, 1972b). STRIPS solves planning problems. It takes a set of operator descriptions, a goal formula, and an initial world model given by a set of formulas and produces a sequence of operators that transforms the initial world model into a model in which the goal is true. An operator description consists of a precondition, a delete list, and an add list. The precondition specifies the conditions under which the operator is applicable, the delete list specifies the formulas that are deleted by the operator, and the add list specifies the formulas that are added by the operator. STRIPS deals with the commonsense law of inertia by making the assumption that, when an operator is applied, any formulas not deleted or added by the operator stay the same. This is called the STRIPS assumption by Waldinger (1977, p. 120). Lifschitz (1987b) formalizes the semantics of STRIPS. A STRIPS operator description Operator. o Precondition. c Delete list. d1, . . . , dn Add list. a1, . . . , an is similar to the set of event calculus formulas ...
+
+...
+
+Inconsistency sistency. This is also the case in most of the versions of the classical logic event calculus (Shanahan, 1996, 1997b, 1999a, 2004). But in the basic axiomatization of (not the particular version of R. Miller and Shanahan used in this book called EC), simultaneously initiating and terminating a fluent results in two classes of models.
+
+one in which the fluent is true and one in which the fluent is false. This can be used to represent nondeterminism. R. Miller and Shanahan (2002, pp. 459 and 460) give the following example.
+
+(Nondeterminism can still be represented with EC and DEC using release axioms as discussed in Section 5.2, determining fluents as discussed in Section 9.1, or disjunctive event axioms as discussed in Section 9.2.) Qualiﬁcation problem The qualification problem was first described by McCarthy and Hayes (1969, p. 489).
+
+They considered the problem of how to represent exceptions to statements about the effects of looking up and dialing a person’s telephone number. The phrase “qualification problem” appears to have been first used in print by Hayes (1973, p. 56). He uses the example of a robot that concludes that it can drive to the airport and then notices a flat tire. McCarthy (1977, p. 1040) presents the qualification problem and discusses the countless ways a boat could be prevented from crossing a river in the missionaries and cannibals problem. The qualification problem is also discussed by McCarthy (1980, pp. 27 and 28; 1987, p. 1033) and Hayes (1971, pp. 515 and 516). Our definitions of qualifications, qualified events, and the qualification problem are from Kvarnström and Doherty (2000a). Ginsberg and Smith (1987a, 1988a) propose the use of state constraints for representing qualifications, and F. Lin and Reiter (1994, section 2) call these “qualification constraints.” Preconditions The distinction between action preconditions and fluent preconditions is from R. Miller and Shanahan (2002, p. 464). Baral (1995) makes a similar distinction between an “executability condition of an action” and “preconditions of effects” (p. 2017). Our representation of an action precondition axiom is from Shanahan and Witkowski (2004). This representation must be used with caution when solving abduction or planning problems, as pointed out by R. Miller and Shanahan (2002, p. 465). If the initial situation is not completely specified, then Happens(event, time) becomes a plan for achieving the precondition.
+
+State constraints McCarthy and Hayes (1969, p. 478) give the following transitive law in the situation calculus.
+
+∀x. ∀y . ∀z . ∀s . in(x, y, s) ∧ in(y, z, s) ⊃ in(x, z, s) Exercises Green (1969) introduces a kind of axiom that represents “an implication that holds for a fixed state” (p. 78). State constraints (Genesereth & Nilsson, 1987, p. 267) are also called “domain constraints” (Ginsberg & Smith, 1987b, p. 237). E. Davis (1990) calls state constraints “state coherence axioms” (p. 193). Such constraints in the event calculus are discussed by Shanahan (1995a, pp. 255, 262; 1996, p. 685; 1997b, pp.
+
+406) discusses the treatment of state constraints in the situation calculus. Doherty, Gustafsson, Karlsson, and Kvarnström (1998, p. 16) discuss domain constraints in temporal action logics. Gustafsson and Doherty (1996) call state constraints that mention multiple timepoints “transition constraints” (p. 92). They give an example that in the event calculus is represented as EXERCISES room, the first agent is listening to the second agent, and the first agent tells the second agent a fact, then the second agent will know that fact.
+
+the same room, Ryan is listening to Nathan, and Nathan tells Ryan a particular fact, then Ryan will know that fact.
+
+Formalize that if an agent is outside, it is cold outside, and the agent is not wearing a coat, then the agent is cold. Incorporate other weather conditions such as rain. Include axioms for putting on and taking off a coat.
+
+Formalize the opening of a book to a particular page number and the closing of a book.
+
+Formalize the formation and dissolution of interpersonal relationships such as friendship and marriage (Dyer, 1983; Schank & Abelson, 1977).
+
+Simple axioms for waking up and falling asleep are given in Section 2.7.1.
+
+Create a more detailed formalization of the human sleep cycle. Incorporate getting out of bed, getting tired, lying in bed, and waiting to fall asleep.
+
+Formalize lighting and putting out a fire.
+
+State constraint (3.44) says that a person is either lying, sitting, or standing.
+
+Add appropriate event predicates, fluent predicates, and axioms to formalize lying down on something, sitting down on something, and standing up.
+
+daytime, nighttime, morning, afternoon, and evening.
+
+and 3.4.1? Consider the following scenarios.
+
+• Two agents dial one another simultaneously.
+
+• One agent dials another agent at the same instant that the other agent picks up the phone.
+

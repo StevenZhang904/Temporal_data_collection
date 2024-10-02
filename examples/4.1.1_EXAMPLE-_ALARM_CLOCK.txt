@@ -1,0 +1,21 @@
+gered events. The alarm going off is a triggered event, and we can formalize the operation of an alarm clock using trigger axioms.
+
+We start with some effect axioms. If a clock’s alarm time is t1 and an agent sets the clock’s alarm time to t2, then the clock’s alarm time will be t2 and will no longer be t1.
+
+If an agent turns on a clock’s alarm, then it will be on.
+
+If an agent turns off a clock’s alarm, then it will no longer be on.
+
+If an alarm starts beeping, then it will be beeping.
+
+If an agent turns off a clock’s alarm, then the clock will no longer be beeping.
+
+We have a state constraint that says that a clock has a unique alarm time at any given time.
+
+Now we use a trigger axiom. If a clock’s alarm time is the present moment and the alarm is on, then the clock starts beeping.
+
+Let us use the following observations and narrative. At timepoint 0, the alarm is not on, the alarm is not beeping, and the alarm time is set to 10.
+
+At timepoint 0, Nathan sets the alarm clock for timepoint 2; and at timepoint 1, he turns on the alarm.
+
+We can then show that the alarm clock will be beeping at timepoint 3.

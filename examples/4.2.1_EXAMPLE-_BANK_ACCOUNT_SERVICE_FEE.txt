@@ -1,0 +1,21 @@
+An example in which we prevent the repeated triggering of events in this way is the charging of service fees. We formalize a bank account that charges a monthly service fee if the balance falls below a minimum amount at any time during the month.
+
+First, we describe the basic operation of the account using effect axioms. If the balance of account a1 is greater than or equal to some amount and that amount is transferred from a1 to account a2, then the balance of a2 increases by that amount and the balance of a1 decreases by that amount.
+
+HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ We have a state constraint that says that an account has a unique balance at any given time.
+
+We also have a trigger axiom that says that if the balance in an account falls below the minimum balance and a service fee has not yet been charged to the account, then a service fee is charged to the account.
+
+HoldsAt(Balance(a, x), t) ∧ x < MinimumBalance(a) ∧ When a service fee is charged to an account, a note is made of this fact so that the account is not repeatedly charged.
+
+This is reset once each month.
+
+If a service fee is charged to an account, then the balance of the account decreases by the amount of the service fee.
+
+Let us use the following observations and narrative about two bank accounts.
+
+Initially, a service fee has not been charged to the first account, the balance in both accounts is 1000, the minimum balance of the first account is 500, and the service fee of the first account is 5.
+
+Two transfers are made from the first account to the second account. A transfer of 200 is made and then a transfer of 400 is made.
+
+We can show that, after these transfers, the balance in the first account will be 395.

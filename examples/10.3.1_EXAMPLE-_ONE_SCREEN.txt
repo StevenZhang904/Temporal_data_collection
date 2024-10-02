@@ -1,0 +1,11 @@
+Consider the following scenario involving three locations. The location L1 is to the left of L2, which is to the left of L3.
+
+Our view of location L2 is blocked by a screen.
+
+Suppose we observe the following. At timepoint 0, we observe an object, let us call it O1, at L1 and nothing at L3. At timepoint 1, we observe no objects at L1 or L3.
+
+At timepoint 2, we observe an object, let us call it O2, at L3 and nothing at L1. We observe nothing about L2 because it is blocked by a screen.
+
+Thus, we have the following observations.
+
+We can then show that O1 and O2 must be the same object.

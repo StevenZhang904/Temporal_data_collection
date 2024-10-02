@@ -1,0 +1,3 @@
+Now consider the following scenario involving five locations. The location L1 is to the left of L2, which is to the left of L3, which is to the left of L4, which is to the left of L5.
+
+Locations L2 and L4 are blocked by screens.

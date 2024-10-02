@@ -1,0 +1,25 @@
+The circumscription of the running and driving example in Section 9.2.1 can be handled in answer set programming. We specify entities, fluents, and events.
+
+agent(nathan).
+
+location(bookstore).
+
+We write a disjunctive event axiom that specifies that, if an agent goes to a location, then the agent runs or drives to that location.
+
+We write an effect axiom that says that, if an agent runs to a location, then the agent will be tired.
+
+Now we specify that Nathan was initially not tired and went to the bookstore.
+
+happens(go(nathan,bookstore),0).
+
+Finally, we specify that Nathan was tired afterward.
+
+holdsAt(tired(nathan),1).
+
+We specify that fluents are not released at timepoint 0.
+
+We then run clingo as follows.
+
+It is correctly inferred that Nathan ran to the bookstore.
+
+Answer. 1

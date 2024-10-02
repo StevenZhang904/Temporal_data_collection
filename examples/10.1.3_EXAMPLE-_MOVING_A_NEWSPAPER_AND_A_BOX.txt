@@ -1,0 +1,7 @@
+Lisa, a newspaper, and a box are in the living room. She puts the newspaper in the box, picks up the box, and walks into the kitchen.
+
+Lisa then sets down the box and walks back into the living room.
+
+The fluent INROOM is always released from the commonsense law of inertia, and IN is never released from this law.
+
+We can show that Lisa will be in the living room, but the newspaper and box will be in the kitchen.

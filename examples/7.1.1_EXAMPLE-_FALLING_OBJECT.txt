@@ -1,0 +1,5 @@
+An object O1 is at rest at height H prior to timepoint T1, starts to fall at timepoint T1, √ G(t − T1)2), t) We have a state constraint that says that an object has a unique height at any given time.
+
+The height of O1 is released from the commonsense law of inertia.
+
+From this axiomatization, we can determine the height of O1 at any timepoint. For

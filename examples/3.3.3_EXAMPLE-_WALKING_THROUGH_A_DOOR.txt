@@ -1,0 +1,5 @@
+Suppose that in order for an agent to walk through a door, the agent must be near the door.
+
+Suppose further that Nathan is not near a door and walks through a door.
+
+We then get inconsistency.

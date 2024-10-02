@@ -1,0 +1,71 @@
+The circumscription of the example of carrying a book in Section 6.4.1 can be handled in answer set programming. We specify entities, fluents, and events.
+
+agent(nathan).
+
+object(book).
+
+room(livingRoom).
+
+room(kitchen).
+
+We use effect axioms to represent that, if an agent walks from room r1 to room r2, then the agent will be in r2 and will no longer be in r1.
+
+room(R2), time(T).
+
+room(R1), room(R2), time(T).
+
+We specify that an object is in one room at a time.
+
+object(O), room(R1), room(R2), time(T).
+
+We specify that, if an agent is in the same room as an object and the agent picks up the object, then the agent will be holding the object.
+
+holdsAt(inRoom(O,R),T), agent(A), object(O), room(R), time(T).
+
+Further, if an agent is holding an object and the agent lets go of the object, then the agent will no longer be holding the object.
+
+agent(A), object(O), time(T).
+
+We use effect constraints to represent the indirect effects of walking from one room to another.
+
+holdsAt(holding(A,O), T).
+
+holdsAt(holding(A,O), T).
+
+Now we specify that Nathan and the book start out in the living room. Nathan picks up the book and walks into the kitchen. He lets go of the book and walks into the living room.
+
+holdsAt(inRoom(nathan,livingRoom),0).
+
+holdsAt(inRoom(book,livingRoom),0).
+
+happens(pickUp(nathan,book),0).
+
+happens(walk(nathan,livingRoom,kitchen),1).
+
+happens(letGoOf(nathan,book),2).
+
+happens(walk(nathan,kitchen,livingRoom),3).
+
+We specify that fluents are not released at timepoint 0.
+
+Finally, we run clingo as follows.
+
+It is correctly inferred that, at the end, the book is in the kitchen and Nathan is in the living room.
+
+Answer. 1 inRoom(book,livingRoom) inRoom(nathan,livingRoom) inRoom(book,livingRoom) inRoom(nathan,livingRoom) holding(nathan,book) inRoom(nathan,kitchen) inRoom(book,kitchen) inRoom(book,kitchen) The F2LP program, which was developed by Joohyung Lee and Ravi Palla, is a useful under the stable models semantics into answer set programs. The logical symbols supported by F2LP are shown in Table 15.1. Answer set program rules may also be provided in the input to F2LP; these are written to output unchanged.
+
+The E action language, which was developed by Antonis Kakas and Rob Miller, describe how an E domain description can be translated into an answer set program.
+
+Definition 15.26. An E signature σ consists of disjoint sets of fluents, events, and timepoints.
+
+For the purposes of our translation of E into answer set programs, we assume that fluents and events are answer set program atoms, and we assume that timepoints are answer set program terms. We define an E statement and the translation of a statement into an answer set program rule as follows.
+
+Table 15.1 Symbols Supported by F2LP Name F2LP Conjunction Disjunction Implication Implication Default negation Classical negation True False Universal quantiﬁcation Existential quantiﬁcation & | not true false ![X,Y,Z].
+
+?[X,Y,Z].
+
+∧ ∨ ¬ (cid.14) ⊥ ∀ x, y, z ∃ x, y, z Definition 15.27. If β is a fluent and τ is a timepoint, then is a statement. It is translated into the rule holdsAt(β, τ ).
+
+Definition 15.28. If β is a fluent and τ is a timepoint, then is a statement. It is translated into the rule Definition 15.29. If α is an event and τ is a timepoint, then is a statement. It is translated into the rule happens(α, τ ).
+
+Definition 15.30. If α is an event, β is a fluent, γ1, . . . , γn are fluents, and π is initiates or terminates, then is a statement. It is translated into the rule where τ is a new variable.

@@ -1,0 +1,9 @@
+We start with a disjunctive event axiom that says that, if an agent goes to a location, then the agent runs or drives to that location.
+
+Happens(Run(a, l), t) ∨ We have an effect axiom that says that, if an agent runs to a location, then the agent will be tired.
+
+Suppose we are told that Nathan was initially not tired and went to the bookstore.
+
+The event Go(Nathan, Bookstore) has a nondeterministic effect. Nathan may or may not be tired afterward. Now suppose we are told that Nathan was tired afterward.
+
+We can then show that Nathan must have run to the bookstore.
