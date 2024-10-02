@@ -1,1 +1,0 @@
-rewriting (cid.12) as the logically equivalent formula and then applying Theorem 2.1, which gives

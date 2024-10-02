@@ -1,0 +1,14 @@
+Now consider the following scenario involving five locations: The location L1 is to
+the left of L2, which is to the left of L3, which is to the left of L4, which is to the left
+of L5:
+(10.87)
+Adjacent(l1, l2) ⇔
+(l1 = L1 ∧ l2 = L2) ∨
+(l1 = L2 ∧ l2 = L1) ∨
+(l1 = L2 ∧ l2 = L3) ∨
+(l1 = L3 ∧ l2 = L2) ∨
+(l1 = L3 ∧ l2 = L4) ∨
+(l1 = L4 ∧ l2 = L3) ∨
+(l1 = L4 ∧ l2 = L5) ∨
+(l1 = L5 ∧ l2 = L4)
+Locations L2 and L4 are blocked by screens.

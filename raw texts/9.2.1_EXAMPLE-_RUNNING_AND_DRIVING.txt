@@ -1,0 +1,22 @@
+We start with a disjunctive event axiom that says that, if an agent goes to a location,
+then the agent runs or drives to that location:
+Happens(Go(a, l), t) ⇒
+Happens(Run(a, l), t) ∨
+Happens(Drive(a, l), t)
+(9.15)
+We have an effect axiom that says that, if an agent runs to a location, then the agent
+will be tired:
+Initiates(Run(a, l), Tired(a), t)
+(9.16)
+Suppose we are told that Nathan was initially not tired and went to the bookstore:
+¬ReleasedAt( f , t)
+¬HoldsAt(Tired(Nathan), 0)
+Happens(Go(Nathan, Bookstore), 0)
+(9.19)
+The event Go(Nathan, Bookstore) has a nondeterministic effect: Nathan may or may
+not be tired afterward. Now suppose we are told that Nathan was tired afterward:
+(9.18)
+(9.17)
+We can then show that Nathan must have run to the bookstore.
+HoldsAt(Tired(Nathan), 1)
+(9.20)

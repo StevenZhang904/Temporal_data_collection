@@ -1,0 +1,47 @@
+An important use of state constraints is to simplify the specification of initial
+conditions. We can use state constraints to tighten up the telephone axiomatization
+given in Section 3.1.1.
+We add several axioms. A phone cannot be ringing itself:
+¬HoldsAt(Ringing(p, p), t)
+If phone p1 is ringing phone p2, then p2 cannot be ringing p1:
+HoldsAt(Ringing(p1, p2), t) ∧ p1 (cid:8)= p2 ⇒
+¬HoldsAt(Ringing(p2, p1), t)
+A phone cannot be connected to itself:
+¬HoldsAt(Connected(p, p), t)
+If phone p1 is connected to phone p2, then p2 cannot be connected to p1:
+HoldsAt(Connected(p1, p2), t) ∧ p1 (cid:8)= p2 ⇒
+¬HoldsAt(Connected(p2, p1), t)
+(3.45)
+(3.46)
+(3.47)
+(3.48)
+At any time, a phone either is idle, has a dial tone, has a busy signal, is ringing
+another phone, is being rung by another phone, is connected to another phone, or
+is disconnected:
+(3.49)
+HoldsAt(Idle(p), t) ˙∨
+HoldsAt(DialTone(p), t) ˙∨
+HoldsAt(BusySignal(p), t) ˙∨
+∃p1 HoldsAt(Ringing(p, p1), t) ˙∨
+∃p1 HoldsAt(Ringing(p1, p), t) ˙∨
+∃p1 HoldsAt(Connected(p, p1), t) ˙∨
+∃p1 HoldsAt(Connected(p1, p), t) ˙∨
+HoldsAt(Disconnected(p), t)
+These state constraints simplify specification of initial conditions. For example, from
+HoldsAt(Idle(Phone1), 0), HoldsAt(Idle(Phone2), 0), (3.45), (3.46), (3.47), (3.48),
+and (3.49), we have all of the following:
+¬HoldsAt(DialTone(Phone1), 0)
+¬HoldsAt(BusySignal(Phone1), 0)
+¬HoldsAt(Ringing(Phone1, Phone1), 0)
+¬HoldsAt(Ringing(Phone1, Phone2), 0)
+¬HoldsAt(Connected(Phone1, Phone1), 0)
+¬HoldsAt(Connected(Phone1, Phone2), 0)
+¬HoldsAt(Disconnected(Phone1), 0)
+¬HoldsAt(DialTone(Phone2), 0)
+¬HoldsAt(BusySignal(Phone2), 0)
+¬HoldsAt(Ringing(Phone2, Phone2), 0)
+¬HoldsAt(Ringing(Phone2, Phone1), 0)
+¬HoldsAt(Connected(Phone2, Phone2), 0)
+¬HoldsAt(Connected(Phone2, Phone1), 0)
+¬HoldsAt(Disconnected(Phone2), 0)
+Therefore, we no longer have to specify these initial conditions explicitly.

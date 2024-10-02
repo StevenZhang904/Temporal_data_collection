@@ -1,0 +1,43 @@
+We start with some positive and negative effect axioms. If an agent switches on a
+device, then the device will be switched on:
+Initiates(SwitchOn(a, d), SwitchedOn(d), t)
+(6.23)
+If an agent switches off a device, then the device will no longer be switched on:
+Terminates(SwitchOff (a, d), SwitchedOn(d), t)
+If an agent plugs in a device, then the device will be plugged in:
+Initiates(PlugIn(a, d), PluggedIn(d), t)
+If an agent unplugs a device, then the device will no longer be plugged in:
+Terminates(Unplug(a, d), PluggedIn(d), t)
+(6.24)
+(6.25)
+(6.26)
+We use a state constraint to represent the fact that a device is on whenever the device
+is switched on and the device is plugged in:
+HoldsAt(On(d), t) ⇔
+HoldsAt(SwitchedOn(d), t) ∧ HoldsAt(PluggedIn(d), t)
+(6.27)
+The order in which the device is switched on and plugged in does not matter. The
+device will be on once it is both switched on and plugged in.
+Unlike the use of effect axioms for representing indirect effects, when we add
+other events that initiate or terminate SwitchedOn, we do not have to add any further
+axioms. The state constraint (6.27) represents an indirect effect of SwitchedOn,
+no matter how SwitchedOn is initiated or terminated. The same is true for
+Plugged In.
+Consider the following observations and narrative. Initially, the device is neither
+switched on nor plugged in:
+ReleasedAt(On(d), t)
+¬ReleasedAt(SwitchedOn(d), t)
+¬ReleasedAt(PluggedIn(d), t)
+¬HoldsAt(SwitchedOn(Device1), 0)
+¬HoldsAt(PluggedIn(Device1), 0)
+Then Nathan switches on and plugs in the device:
+Happens(SwitchOn(Nathan, Device1), 0)
+Happens(PlugIn(Nathan, Device1), 1)
+(6.28)
+(6.29)
+(6.30)
+(6.31)
+(6.32)
+(6.33)
+(6.34)
+We can show that the device will then be on.

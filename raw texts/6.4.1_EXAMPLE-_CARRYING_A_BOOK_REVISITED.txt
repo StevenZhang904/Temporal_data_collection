@@ -1,0 +1,154 @@
+Consider again the example in Section 6.1.1. We may represent the indirect effects
+of walking from one room to another using effect constraints:
+HoldsAt(Holding(a, o), t) ∧
+Initiates(e, InRoom(a, r), t) ⇒
+Initiates(e, InRoom(o, r), t)
+HoldsAt(Holding(a, o), t) ∧
+Terminates(e, InRoom(a, r), t) ⇒
+Terminates(e, InRoom(o, r), t)
+(6.63)
+(6.64)
+Unfortunately, we cannot use predicate completion and Theorems 2.1 and 2.2 to com-
+CIRC[(6.1) ∧ (6.2) ∧ (6.4) ∧ (6.5) ∧ (6.63) ∧ (6.64); Initiates, Terminates,
+pute
+Releases], because Initiates is contained in the antecedent of (6.63) and Terminates
+is contained in the antecedent of (6.64). (This can be handled by answer set
+programming—see Section 15.3.4.) Instead we simply use (6.63) and (6.64) to
+derive the effect axioms in Section 6.1.1 that represent the indirect effects. From
+(6.63) and
+we have
+Initiates(Walk(a, r1, r2), InRoom(a, r2), t)
+HoldsAt(Holding(a, o), t) ⇒
+Initiates(Walk(a, r1, r2), InRoom(o, r2), t)
+which is (6.6). From (6.64) and
+r1 (cid:2)= r2 ⇒ Terminates(Walk(a, r1, r2), InRoom(a, r1), t)
+we have
+which is (6.7).
+HoldsAt(Holding(a, o), t) ∧ r1 (cid:2)= r2 ⇒
+Terminates(Walk(a, r1, r2), InRoom(o, r1), t)
+Michael Thielscher devised the electronic circuit shown in Figure 6.1 in order to point
+out problems with solutions to the ramification problem based on dividing fluents
+S1
+B
+S2
+R
+L
+S3
+FIGURE 6.1
+Thielscher’s circuit (Thielscher, 1996, p. 19).
+into primitive and derived fluents, as discussed in Section 6.2. The circuit consists of
+a battery (B), three switches (S1, S2, and S3), a relay (R), and a light (L). A switch
+can be open or closed, the relay can be activated or not activated, and the light can
+be lit or not lit. Relay R is activated whenever S1 and S3 are closed. Light L is lit
+whenever S1 and S2 are closed. Relay R is connected to switch S2, so that when R is
+activated, S2 is opened.
+One behavior of this circuit is as follows. Suppose that initially S1 is open, S2 and
+S3 are closed, R is not activated, and L is not lit. If we close S1, then R will be
+activated and S2 will be opened. Because S2 is open, the result will be that light L is
+not lit.
+Now suppose we try to model this behavior using primitive and derived fluents.
+We use primitive fluents for S1 and S3:
+Initiates(Close(S1), Closed(S1), t)
+Terminates(Open(S1), Closed(S1), t)
+Initiates(Close(S3), Closed(S3), t)
+Terminates(Open(S3), Closed(S3), t)
+We use derived fluents for R and L:
+HoldsAt(Activated(R), t) ⇔
+HoldsAt(Closed(S1), t) ∧ HoldsAt(Closed(S3), t)
+HoldsAt(Lit(L), t) ⇔
+HoldsAt(Closed(S1), t) ∧ HoldsAt(Closed(S2), t)
+(6.65)
+(6.66)
+(6.67)
+(6.68)
+(6.69)
+(6.70)
+It is not clear what to use for S2, which appears to be both primitive and derived.
+On the one hand, S2 can be manually opened and closed:
+Initiates(Close(S2), Closed(S2), t)
+Terminates(Open(S2), Closed(S2), t)
+On the other hand, S2 is open whenever R is activated:
+¬HoldsAt(Closed(S2), t) ⇔ HoldsAt(Activated(R), t)
+(6.71)
+(6.72)
+(6.73)
+Unfortunately, if we use all three axioms (6.71), (6.72), and (6.73), then we get
+inconsistency. To see this, consider the following observations and narrative:
+¬HoldsAt(Closed(S1), 0)
+HoldsAt(Closed(S2), 0)
+HoldsAt(Closed(S3), 0)
+¬HoldsAt(Activated(R), 0)
+¬HoldsAt(Lit(L), 0)
+¬ReleasedAt(f , t)
+Happens(Close(S1), 0)
+(6.74)
+(6.75)
+(6.76)
+(6.77)
+(6.78)
+(6.79)
+(6.80)
+6.4. Let (cid:2) = (6.65) ∧ (6.66) ∧ (6.67) ∧ (6.68) ∧ (6.71) ∧ (6.72),
+Proposition
+(cid:3) = (6.80), (cid:4) = U[Close, Open, Activate, Light] ∧ U[Closed, Activated, Lit], and
+(cid:5) = (6.69) ∧ (6.70) ∧ (6.73), and (cid:6) = (6.74) ∧ (6.75) ∧ (6.76) ∧ (6.77) ∧ (6.78)
+∧ (6.79).
+CIRC[(cid:2); Initiates, Terminates, Releases] ∧ CIRC[(cid:3); Happens]
+∧ (cid:4) ∧ (cid:5) ∧ (cid:6) ∧ DEC is inconsistent.
+Proof. From CIRC[(cid:2); Initiates, Terminates, Releases] and Theorems 2.1 and 2.2,
+we have
+Then
+Initiates(e, f , t) ⇔
+(e = Close(S1) ∧ f = Closed(S1)) ∨
+(e = Close(S2) ∧ f = Closed(S2)) ∨
+(e = Close(S3) ∧ f = Closed(S3))
+Terminates(e, f , t) ⇔
+(e = Open(S1) ∧ f = Closed(S1)) ∨
+(e = Open(S2) ∧ f = Closed(S2)) ∨
+(e = Open(S3) ∧ f = Closed(S3))
+¬Releases(e, f , t).
+From CIRC[(cid:3); Happens] and Theorem 2.1, we have
+Happens(e, t) ⇔
+(e = Close(S1) ∧ t = 0)
+(6.81)
+(6.82)
+(6.83)
+(6.84)
+From (6.80) (which follows from (6.84)), (6.65) (which follows from (6.81)), and
+DEC9, we have HoldsAt(Closed(S1), 1). From this, (6.76), and (6.69), we have
+HoldsAt(Activated(R), 1). From this and (6.73), we have
+¬HoldsAt(Closed(S2), 1)
+(6.85)
+from (6.84) and (6.82), we have ¬∃e (Happens(e, 0) ∧ Terminates(e,
+Yet,
+Closed(S2), 0)). From this, (6.75), (6.79), and DEC5, we have HoldsAt (Closed(S2), 1),
+(cid:2)
+which contradicts (6.85).
+Thus, it does not work for S2 to be both a primitive and derived fluent.
+In order to deal with this circuit, or any commonsense reasoning problem in which
+indirect effects interact with one another instantaneously, Murray Shanahan enhances
+the event calculus as follows. First, he adds the following four predicates.
+Started(f , t): Fluent f is true at timepoint t, or f is initiated by an event that
+occurs at t. We say that f is started at t.
+Stopped(f , t): Fluent f is false at timepoint t, or f is terminated by an event that
+occurs at t. We say that f is stopped at t.
+Initiated(f , t): Fluent f is started at timepoint t, and f is not terminated by any
+event that occurs at t.
+Terminated(f , t): Fluent f is stopped at timepoint t, and f is not initiated by any
+event that occurs at t.
+Second, he adds the following axioms.
+Axiom CC1.
+Started(f , t) ⇔ HoldsAt(f , t) ∨ ∃e (Happens(e, t) ∧ Initiates(e, f , t))
+Axiom CC2.
+Stopped(f , t) ⇔ ¬HoldsAt(f , t) ∨ ∃e (Happens(e, t) ∧ Terminates(e, f , t))
+Axiom CC3.
+Initiated(f , t) ⇔ Started(f , t) ∧ ¬∃e (Happens(e, t) ∧ Terminates(e, f , t))
+Axiom CC4.
+Terminated(f , t) ⇔ Stopped(f , t) ∧ ¬∃e (Happens(e, t) ∧ Initiates(e, f , t))
+We use CC to mean the conjunction of axioms CC1 through CC4. Third, Shanahan
+introduces a new type of axiom called a causal constraint.
+Definition 6.2. If α is an event term, β and β1, . . . , βn are fluent terms, θ is
+Stopped or Started, π1, . . . , πn are Initiated or Terminated, and τ is a timepoint
+term, then
+θ(β, τ ) ∧ π1(β1, τ ) ∧ · · · ∧ πn(βn, τ ) ⇒ Happens(α, τ )
+is a causal constraint.

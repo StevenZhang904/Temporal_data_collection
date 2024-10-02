@@ -1,0 +1,33 @@
+If we are told that Lisa likes Kate, who just won the lottery, we should infer that Kate
+will be happy and Lisa will be happy for Kate. We assume that when any agent wins
+the lottery, all agents are aware of it:
+Initiates(WinLottery(a1), Believe(a2, WinLottery(a1)), t)
+(11.102)
+We have the following observations and narrative. Initially, Kate is not joyful about
+any events, and Lisa is not happy for Kate regarding any events:
+¬ReleasedAt( f , t)
+¬HoldsAt(Joy(Kate, e), 0)
+¬HoldsAt(HappyFor(Lisa, Kate, e), 0)
+Kate and Lisa do not believe any events have occurred:
+¬HoldsAt(Believe(Kate, e), 0)
+¬HoldsAt(Believe(Lisa, e), 0)
+(11.103)
+(11.104)
+(11.105)
+(11.106)
+(11.107)
+Lisa likes Kate, Kate believes that her winning the lottery is highly desirable to
+herself, Lisa believes that Kate winning the lottery is highly desirable to Kate, and
+Lisa believes that Kate winning the lottery is highly desirable to Lisa:
+HoldsAt(Like(Lisa, Kate), t)
+HoldsAt(Desirability(Kate, Kate, WinLottery(Kate), 1), t)
+HoldsAt(Desirability(Lisa, Kate, WinLottery(Kate), 1), t)
+(11.108)
+(11.109)
+(11.110)
+HoldsAt(Desirability(Lisa, Lisa, WinLottery(Kate), 1), t)
+(11.111)
+Kate wins the lottery:
+Happens(WinLottery(Kate), 0)
+(11.112)
+We can show that Kate will be happy, and Lisa will be happy for Kate.

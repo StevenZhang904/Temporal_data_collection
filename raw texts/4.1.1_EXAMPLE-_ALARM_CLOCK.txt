@@ -1,0 +1,50 @@
+Whenever we use an alarm clock, we perform commonsense reasoning about trig-
+gered events. The alarm going off is a triggered event, and we can formalize the
+operation of an alarm clock using trigger axioms.
+We start with some effect axioms. If a clock’s alarm time is t1 and an agent sets the
+clock’s alarm time to t2, then the clock’s alarm time will be t2 and will no longer be t1:
+HoldsAt(AlarmTime(c, t1), t) ∧ t1 (cid:4)= t2 ⇒
+Initiates(SetAlarmTime(a, c, t2), AlarmTime(c, t2), t)
+HoldsAt(AlarmTime(c, t1), t) ∧ t1 (cid:4)= t2 ⇒
+Terminates(SetAlarmTime(a, c, t2), AlarmTime(c, t1), t)
+(4.1)
+(4.2)
+If an agent turns on a clock’s alarm, then it will be on:
+Initiates(TurnOnAlarm(a, c), AlarmOn(c), t)
+(4.3)
+If an agent turns off a clock’s alarm, then it will no longer be on:
+Terminates(TurnOffAlarm(a, c), AlarmOn(c), t)
+If an alarm starts beeping, then it will be beeping:
+Initiates(StartBeeping(c), Beeping(c), t)
+If an agent turns off a clock’s alarm, then the clock will no longer be beeping:
+Terminates(TurnOffAlarm(a, c), Beeping(c), t)
+(4.4)
+(4.5)
+(4.6)
+We have a state constraint that says that a clock has a unique alarm time at any given
+time:
+HoldsAt(AlarmTime(c, t1), t) ∧ HoldsAt(AlarmTime(c, t2), t) ⇒
+t1 = t2
+(4.7)
+Now we use a trigger axiom. If a clock’s alarm time is the present moment and the
+alarm is on, then the clock starts beeping:
+HoldsAt(AlarmTime(c, t), t) ∧ HoldsAt(AlarmOn(c), t) ⇒
+Happens(StartBeeping(c), t)
+(4.8)
+Let us use the following observations and narrative. At timepoint 0, the alarm is
+not on, the alarm is not beeping, and the alarm time is set to 10:
+¬HoldsAt(AlarmOn(Clock), 0)
+¬HoldsAt(Beeping(Clock), 0)
+HoldsAt(AlarmTime(Clock, 10), 0)
+¬ReleasedAt( f , t)
+(4.9)
+(4.10)
+(4.11)
+(4.12)
+At timepoint 0, Nathan sets the alarm clock for timepoint 2; and at timepoint 1, he
+turns on the alarm:
+Happens(SetAlarmTime(Nathan, Clock, 2), 0)
+Happens(TurnOnAlarm(Nathan, Clock), 1)
+(4.13)
+(4.14)
+We can then show that the alarm clock will be beeping at timepoint 3.

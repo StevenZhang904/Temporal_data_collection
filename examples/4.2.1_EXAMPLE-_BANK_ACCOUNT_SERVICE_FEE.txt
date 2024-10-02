@@ -2,11 +2,11 @@ An example in which we prevent the repeated triggering of events in this way is 
 
 First, we describe the basic operation of the account using effect axioms. If the balance of account a1 is greater than or equal to some amount and that amount is transferred from a1 to account a2, then the balance of a2 increases by that amount and the balance of a1 decreases by that amount.
 
-HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ HoldsAt(Balance(a1, x1), t) ∧ HoldsAt(Balance(a2, x2), t) ∧ We have a state constraint that says that an account has a unique balance at any given time.
+We have a state constraint that says that an account has a unique balance at any given time.
 
 We also have a trigger axiom that says that if the balance in an account falls below the minimum balance and a service fee has not yet been charged to the account, then a service fee is charged to the account.
 
-HoldsAt(Balance(a, x), t) ∧ x < MinimumBalance(a) ∧ When a service fee is charged to an account, a note is made of this fact so that the account is not repeatedly charged.
+When a service fee is charged to an account, a note is made of this fact so that the account is not repeatedly charged.
 
 This is reset once each month.
 

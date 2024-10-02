@@ -1,6 +1,6 @@
 Consider again the example in Section 6.1.1. We may represent the indirect effects of walking from one room to another using effect constraints.
 
-HoldsAt(Holding(a, o), t) ∧ HoldsAt(Holding(a, o), t) ∧ CIRC[(6.1) ∧ (6.2) ∧ (6.4) ∧ (6.5) ∧ (6.63) ∧ (6.64); Initiates, Terminates, pute Releases], because Initiates is contained in the antecedent of (6.63) and Terminates is contained in the antecedent of (6.64). (This can be handled by answer set programming—see Section 15.3.4.) Instead we simply use (6.63) and (6.64) to derive the effect axioms in Section 6.1.1 that represent the indirect effects. From we have which is (6.6). From (6.64) and we have which is (6.7).
+Unfortunately, we cannot use predicate completion and Theorems 2.1 and 2.2 to compute Releases], because Initiates is contained in the antecedent of (6.63) and Terminates is contained in the antecedent of (6.64). (This can be handled by answer set programming—see Section 15.3.4.) Instead we simply use (6.63) and (6.64) to derive the effect axioms in Section 6.1.1 that represent the indirect effects. From we have which is (6.6). From (6.64) and we have which is (6.7).
 
 Michael Thielscher devised the electronic circuit shown in Figure 6.1 in order to point out problems with solutions to the ramification problem based on dividing fluents S1 B S2 R L S3 FIGURE 6.1 Thielscher’s circuit (Thielscher, 1996, p. 19).
 
@@ -22,13 +22,9 @@ On the other hand, S2 is open whenever R is activated.
 
 Unfortunately, if we use all three axioms (6.71), (6.72), and (6.73), then we get inconsistency. To see this, consider the following observations and narrative.
 
-Proposition ∧ (6.79).
+Proposition Proof. From CIRC[(cid.2); Initiates, Terminates, Releases] and Theorems 2.1 and 2.2, we have Then ¬Releases(e, f , t).
 
-CIRC[(cid.2); Initiates, Terminates, Releases] ∧ CIRC[(cid.3); Happens] ∧ (cid.4) ∧ (cid.5) ∧ (cid.6) ∧ DEC is inconsistent.
-
-Proof. From CIRC[(cid.2); Initiates, Terminates, Releases] and Theorems 2.1 and 2.2, we have Then ¬Releases(e, f , t).
-
-From CIRC[(cid.3); Happens] and Theorem 2.1, we have From (6.80) (which follows from (6.84)), (6.65) (which follows from (6.81)), and DEC9, we have HoldsAt(Closed(S1), 1). From this, (6.76), and (6.69), we have HoldsAt(Activated(R), 1). From this and (6.73), we have from (6.84) and (6.82), we have ¬∃e (Happens(e, 0) ∧ Terminates(e, Yet, Closed(S2), 0)). From this, (6.75), (6.79), and DEC5, we have HoldsAt (Closed(S2), 1), (cid.2) which contradicts (6.85).
+From CIRC[(cid.3); Happens] and Theorem 2.1, we have From (6.80) (which follows from (6.84)), (6.65) (which follows from (6.81)), and DEC9, we have HoldsAt(Closed(S1), 1). From this, (6.76), and (6.69), we have HoldsAt(Activated(R), 1). From this and (6.73), we have Yet, Closed(S2), 0)). From this, (6.75), (6.79), and DEC5, we have HoldsAt (Closed(S2), 1), (cid.2) which contradicts (6.85).
 
 Thus, it does not work for S2 to be both a primitive and derived fluent.
 

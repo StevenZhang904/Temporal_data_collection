@@ -1,0 +1,28 @@
+The circumscription of the running and driving example in Section 9.2.1 can be
+handled in answer set programming. We specify entities, fluents, and events:
+agent(nathan).
+location(bookstore).
+fluent(tired(A)) :- agent(A).
+event(go(A,L)) :- agent(A), location(L).
+event(run(A,L)) :- agent(A), location(L).
+event(drive(A,L)) :- agent(A), location(L).
+We write a disjunctive event axiom that specifies that, if an agent goes to a
+location, then the agent runs or drives to that location:
+happens(run(A,L),T) | happens(drive(A,L),T) :- happens(go(A,L),T).
+We write an effect axiom that says that, if an agent runs to a location, then the
+agent will be tired:
+initiates(run(A,L),tired(A),T) :- agent(A), location(L), time(T).
+Now we specify that Nathan was initially not tired and went to the bookstore:
+:- holdsAt(tired(nathan),0).
+happens(go(nathan,bookstore),0).
+Finally, we specify that Nathan was tired afterward:
+holdsAt(tired(nathan),1).
+We specify that fluents are not released at timepoint 0:
+:- releasedAt(F,0), fluent(F).
+We then run clingo as follows:
+clingo -c maxtime=1 -n 0 dec.lp rundrive.lp | format-output 1
+It is correctly inferred that Nathan ran to the bookstore:
+Answer: 1
+happens(run(nathan,bookstore),0)
+happens(go(nathan,bookstore),0)
++tired(nathan)

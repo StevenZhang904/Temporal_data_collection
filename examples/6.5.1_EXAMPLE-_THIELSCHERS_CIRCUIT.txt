@@ -4,4 +4,4 @@ We use the observations and narrative just discussed, and we have the following 
 
 We have the following causal constraints.
 
-Stopped(Lit(L), t) ∧ Initiated(Closed(S1), t) ∧ Started(Closed(S2), t) ∧ Stopped(Activated(R), t) ∧ Initiated(Closed(S1), t) ∧ Given this axiomatization we can show that after switch S1 is closed, light L will not be lit.
+Given this axiomatization we can show that after switch S1 is closed, light L will not be lit.

@@ -1,0 +1,48 @@
+An agent picks up a book; the book then moves along with the agent. We start with
+the following spatial theory. If an agent walks from room r1 to room r2, then the agent
+will be in r2 and will no longer be in r1:
+Initiates(Walk(a, r1, r2), InRoom(a, r2), t)
+r1 (cid:2)= r2 ⇒ Terminates(Walk(a, r1, r2), InRoom(a, r1), t)
+An object is in one room at a time:
+HoldsAt(InRoom(o, r1), t) ∧ HoldsAt(InRoom(o, r2), t) ⇒
+r1 = r2
+(6.1)
+(6.2)
+(6.3)
+If an agent is in the same room as an object and the agent picks up the object, then
+the agent will be holding the object:
+HoldsAt(InRoom(a, r), t) ∧ HoldsAt(InRoom(o, r), t) ⇒
+Initiates(PickUp(a, o), Holding(a, o), t)
+(6.4)
+If an agent is holding an object and the agent lets go of the object, then the agent will
+no longer be holding the object:
+HoldsAt(Holding(a, o), t) ⇒
+Terminates(LetGoOf (a, o), Holding(a, o), t)
+(6.5)
+We then represent the indirect effects of walking while holding an object using
+positive and negative effect axioms. If an agent is holding an object and the agent
+walks from room r1 to room r2, then the object will be in r2 and will no longer
+be in r1:
+HoldsAt(Holding(a, o), t) ⇒
+Initiates(Walk(a, r1, r2), InRoom(o, r2), t)
+HoldsAt(Holding(a, o), t) ∧ r1 (cid:2)= r2 ⇒
+Terminates(Walk(a, r1, r2), InRoom(o, r1), t)
+(6.6)
+(6.7)
+Now consider the following observations and narrative. Nathan and the book start
+out in the living room:
+¬ReleasedAt(f , t)
+HoldsAt(InRoom(Nathan, LivingRoom), 0)
+HoldsAt(InRoom(Book, LivingRoom), 0)
+Nathan picks up the book and walks into the kitchen:
+Happens(PickUp(Nathan, Book), 0)
+Happens(Walk(Nathan, LivingRoom, Kitchen), 1)
+We also have
+LivingRoom (cid:2)= Kitchen
+(6.8)
+(6.9)
+(6.10)
+(6.11)
+(6.12)
+(6.13)
+We can then show that the book will be in the kitchen.

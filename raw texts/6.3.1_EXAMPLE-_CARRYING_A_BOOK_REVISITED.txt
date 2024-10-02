@@ -1,0 +1,45 @@
+An agent picks up a book. While the agent is holding the book, its location is
+not subject to the commonsense law of inertia. Instead, its location varies with the
+location of the agent holding it.
+We modify the example in Section 6.1.1 to use release axioms and state constraints
+instead of effect axioms. If an agent picks up an object, then the room of the object
+will be released from the commonsense law of inertia:
+Releases(PickUp(a, o), InRoom(o, r), t)
+(6.45)
+Whenever an agent is holding an object, if the agent is in one room, then the object
+is also in that room:
+HoldsAt(Holding(a, o), t) ∧
+HoldsAt(InRoom(a, r), t) ⇒
+HoldsAt(InRoom(o, r), t)
+(6.46)
+If an agent is in a room and the agent lets go of an object, then the object will be in
+the room, and the fact that the object is in that room will no longer be released from
+the commonsense law of inertia:
+HoldsAt(InRoom(a, r), t) ⇒
+Initiates(LetGoOf (a, o), InRoom(o, r), t)
+(6.47)
+Unlike with the use of effect axioms for representing indirect effects, if we add
+running as another way of moving from room to room, we do not have to add any
+further axioms. The state constraint (6.46) represents an indirect effect of an agent’s
+location, no matter how the agent’s location is changed.
+Suppose we have the following observations and narrative. At first, Nathan and
+the book are in the living room:
+¬ReleasedAt(f , t)
+HoldsAt(InRoom(Nathan, LivingRoom), 0)
+HoldsAt(InRoom(Book, LivingRoom), 0)
+Then Nathan picks up the book and walks into the kitchen:
+Happens(PickUp(Nathan, Book), 0)
+Happens(Walk(Nathan, LivingRoom, Kitchen), 1)
+(6.48)
+(6.49)
+(6.50)
+(6.51)
+(6.52)
+We also have the fact
+same room:
+that
+the living room and the kitchen are not
+the
+LivingRoom (cid:2)= Kitchen
+(6.53)
+We can show that the book will end up in the kitchen.

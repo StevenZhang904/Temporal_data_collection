@@ -1,4 +1,4 @@
-We perform complex commonsense reasoning about the effects of events whenever an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing, we expect to be connected to the caller.
+We perform complex commonsense reasoning about the effects of events whenever we use a telephone. The behavior of a phone is highly context-sensitive. If we pick up an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing, we expect to be connected to the caller.
 
 We can represent our knowledge about telephones using positive and negative effect axioms. If an agent picks up an idle phone, the phone will have a dial tone and will no longer be idle.
 

@@ -8,13 +8,13 @@ If an object is thrown into the air, then its location and velocity will no long
 
 Releases(Throw(a, o, vx, vy, vz), AT(o, x, y, z), t) Releases(Throw(a, o, vx1, vy1, vz1), Velocity(o, vx2, vy2, vz2), t) We specify the location and velocity of the flying object using the following trajectory axioms.
 
-HoldsAt(AT(o, x0, y0, z0), t) ∧ Gt2 Trajectory(Flying(o, vx, vy, vz), t1, AT(o, x1, y1, z1), t2) Trajectory(Flying(o, vx, vy, vz1), t1, Velocity(o, vx, vy, vz2), t2) We have state constraints that say that at any given moment an object has a unique velocity and is flying with a unique velocity.
+Gt2 Trajectory(Flying(o, vx, vy, vz), t1, AT(o, x1, y1, z1), t2) Trajectory(Flying(o, vx, vy, vz1), t1, Velocity(o, vx, vy, vz2), t2) We have state constraints that say that at any given moment an object has a unique velocity and is flying with a unique velocity.
 
-HoldsAt(Velocity(o, vx1, vy1, vz1), t) ∧ HoldsAt(Flying(o, vx1, vy1, vz1), t) ∧ We use a trigger axiom to represent that an elastic collision occurs when two flying objects are at the same location.
+We use a trigger axiom to represent that an elastic collision occurs when two flying objects are at the same location.
 
-HoldsAt(Flying(o1, v1x, v1y, v1z), t) ∧ HoldsAt(Flying(o2, v2x, v2y, v2z), t) ∧ HoldsAt(AT(o1, x, y, z), t) ∧ We use effect axioms to represent that, when object o1 elastically collides with object o2, object o1 assumes the velocity of o2.
+We use effect axioms to represent that, when object o1 elastically collides with object o2, object o1 assumes the velocity of o2.
 
-HoldsAt(Velocity(o1, v1x, v1y, v1z), t) ∧ That is, two elastically colliding objects exchange their velocities. We assume the objects are points of equal mass.
+That is, two elastically colliding objects exchange their velocities. We assume the objects are points of equal mass.
 
 Let us use the following observations and narrative. Initially, one baseball is at Nathan is holding the first baseball, and Ryan is holding the second baseball.
 
@@ -30,7 +30,7 @@ We start with a lemma that states that, if object o1 collides with object o2, th
 
 Proof. Let ω1 and ω2 be arbitrary objects, and τ be an arbitrary timepoint. We must show Suppose the following.
 
-CIRC[(cid.6); Happens] From (10.43) and Theorem 2.1, we have ∃v1x, v1y, v1z, v2x, v2y, v2z, x, y, z HoldsAt(Flying(o1, v1x, v1y, v1z), t) ∧ HoldsAt(Flying(o2, v2x, v2y, v2z), t) ∧ HoldsAt(AT(o1, x, y, z), t) ∧ From this and (10.44), we have.
+CIRC[(cid.6); Happens] From (10.43) and Theorem 2.1, we have ∃v1x, v1y, v1z, v2x, v2y, v2z, x, y, z From this and (10.44), we have.
 
 for some V1X, V1Y, V1Z, V2X, V2Y, V2Z, X, Y, and Z. From (10.46), (10.47), (cid.2) required.
 

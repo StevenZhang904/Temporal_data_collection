@@ -1,0 +1,33 @@
+We start by considering the example of shooting a turkey. If a gun is loaded at
+timepoint 1 and used to shoot a turkey at timepoint 3, then the gun will fire and the
+turkey will no longer be alive. This simple example assumes that the shooter does not
+miss. In this case, the fact that the gun is loaded is subject to the commonsense law
+of inertia.
+This example is due to Steve Hanks and Drew McDermott. If an agent loads a
+gun, then the gun will be loaded:
+Initiates(Load(a, g), Loaded(g), t)
+(5.16)
+If a gun is loaded and agent a1 shoots the gun at agent a2, then a2 will no longer be
+alive:
+HoldsAt(Loaded(g), t) ⇒
+Terminates(Shoot(a1, a2, g), Alive(a2), t)
+(5.17)
+If a gun is loaded and an agent shoots the gun, then the gun will no longer be loaded:
+HoldsAt(Loaded(g), t) ⇒
+Terminates(Shoot(a1, a2, g), Loaded(g), t)
+(5.18)
+Consider the following observations and narrative. Initially, the turkey is alive and
+the gun is not loaded:
+HoldsAt(Alive(Turkey), 0)
+¬HoldsAt(Loaded(Gun), 0)
+(5.19)
+(5.20)
+Nathan loads the gun at timepoint 0, waits at timepoint 1, and shoots the turkey at
+timepoint 2:
+Happens(Load(Nathan, Gun), 0)
+Happens(Wait(Nathan), 1)
+Happens(Shoot(Nathan, Turkey, Gun), 2)
+(5.21)
+(5.22)
+(5.23)
+We can then show that the turkey will no longer be alive at timepoint 3.

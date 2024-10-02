@@ -1,0 +1,124 @@
+Another example is that of a simple robot. At any time, the robot has a unique location
+in two-dimensional space:
+HoldsAt(Location(r, x1, y1), t) ∧
+(8.12)
+HoldsAt(Location(r, x2, y2), t) ⇒
+x1 = x2 ∧ y1 = y2
+And at any time, a robot has a unique direction given by an angle in radians measured
+counterclockwise from the x axis:
+HoldsAt(Direction(r, d1), t) ∧
+HoldsAt(Direction(r, d2), t) ⇒
+d1 = d2
+(8.13)
+A robot has a left wheel and a right wheel. The wheels can be moved separately or
+at the same time. Moving the left wheel cancels the effect of moving the right wheel,
+and moving the right wheel cancels the effect of moving the left wheel. Thus, if a
+robot moves only its left wheel, then the robot will rotate clockwise by π/180 radians
+(1 degree):
+¬Happens(MoveRightWheel(r), t) ∧
+HoldsAt(Direction(r, d), t) ⇒
+Initiates(MoveLeftWheel(r), Direction(r, d − π/180), t)
+¬Happens(MoveRightWheel(r), t) ∧
+HoldsAt(Direction(r, d), t) ⇒
+Terminates(MoveLeftWheel(r), Direction(r, d), t)
+(8.14)
+(8.15)
+If a robot moves its only right wheel, then the robot will rotate counterclockwise by
+π/180 radians:
+¬Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Direction(r, d), t) ⇒
+Initiates(MoveRightWheel(r), Direction(r, d + π/180), t)
+¬Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Direction(r, d), t) ⇒
+Terminates(MoveRightWheel(r), Direction(r, d), t)
+(8.16)
+(8.17)
+Moving the left and right wheels simultaneously has a cumulative effect. Namely, if
+a robot moves its left and right wheels at the same time, then the robot will move
+forward by one unit:
+Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Location(r, x, y), t) ∧
+HoldsAt(Direction(r, d), t) ⇒
+Initiates(MoveRightWheel(r), Location(r, x + Cos(d), y + Sin(d)), t)
+Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Location(r, x, y), t) ⇒
+Terminates(MoveRightWheel(r), Location(r, x, y), t)
+(8.18)
+(8.19)
+Consider the following observations and narrative. The robot is initially at location
+(cid:9)0, 0(cid:10), and its direction is 0 (facing right):
+¬ReleasedAt(f , t)
+HoldsAt(Location(Robot, 0, 0), 0)
+HoldsAt(Direction(Robot, 0), 0)
+(8.20)
+(8.21)
+(8.22)
+At timepoint 0, the robot moves its right wheel; at timepoint 1, the robot moves both
+its left and right wheels:
+(8.23)
+Happens(MoveRightWheel(Robot), 0)
+Happens(MoveLeftWheel(Robot), 1)
+Happens(MoveRightWheel(Robot), 1)
+(8.25)
+We can show that at timepoint 2, the robot will be at location (cid:9)Cos(π/180),
+Sin(π/180)(cid:10).
+8.2. Let (cid:6) = (8.14) ∧ (8.15) ∧ (8.16) ∧ (8.17) ∧ (8.18) ∧ (8.19),
+Proposition
+(cid:7) = (8.23) ∧ (8.24) ∧ (8.25),
+(cid:8) = U[MoveLeftWheel, MoveRightWheel] ∧ U
+[Direction, Location], (cid:11) = (8.12) ∧ (8.13), and (cid:9) = (8.20) ∧ (8.21) ∧ (8.22). Then
+we have
+(8.24)
+CIRC[(cid:6); Initiates, Terminates, Releases] ∧ CIRC[(cid:7); Happens] ∧
+(cid:8) ∧ (cid:11) ∧ (cid:9) ∧ DEC
+(cid:5) HoldsAt(Location(Robot, Cos(π/180), Sin(π/180)), 2)
+Proof. From CIRC[(cid:6); Initiates, Terminates, Releases] and Theorems 2.1 and 2.2,
+we have
+Initiates(e, f , t) ⇔
+∃r, d (e = MoveLeftWheel(r) ∧
+f = Direction(r, d − π/180) ∧
+¬Happens(MoveRightWheel(r), t) ∧
+HoldsAt(Direction(r, d), t)) ∨
+∃r, d (e = MoveRightWheel(r) ∧
+f = Direction(r, d + π/180) ∧
+¬Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Direction(r, d), t)) ∨
+∃r, x, y, d (e = MoveRightWheel(r) ∧
+f = Location(r, x + Cos(d), y + Sin(d)) ∧
+Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Location(r, x, y), t) ∧
+HoldsAt(Direction(r, d), t))
+Terminates(e, f , t) ⇔
+∃r, d (e = MoveLeftWheel(r) ∧
+(8.26)
+(8.27)
+f = Direction(r, d) ∧
+¬Happens(MoveRightWheel(r), t) ∧
+HoldsAt(Direction(r, d), t)) ∨
+∃r, d (e = MoveRightWheel(r) ∧
+f = Direction(r, d) ∧
+¬Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Direction(r, d), t)) ∨
+∃r, x, y, d (e = MoveRightWheel(r) ∧
+f = Location(r, x, y) ∧
+Happens(MoveLeftWheel(r), t) ∧
+HoldsAt(Location(r, x, y), t))
+¬Releases(e, f , t)
+(8.28)
+From CIRC[(cid:7); Happens] and Theorem 2.1, we have
+Happens(e, t) ⇔
+(e = MoveRightWheel(Robot) ∧ t = 0) ∨
+(e = MoveLeftWheel(Robot) ∧ t = 1) ∨
+(e = MoveRightWheel(Robot) ∧ t = 1)
+From (8.29), we have ¬Happens(MoveLeftWheel(Robot), 0). From this, (8.23)
+(which follows from (8.29)), (8.22), (8.16) (which follows from (8.26)), and DEC9,
+we have
+(8.29)
+HoldsAt(Direction(Robot, π/180), 1)
+(8.30)
+From (8.29) and (8.27), we have ¬∃e (Happens(e, 0) ∧ Terminates(e, Location
+(Robot, 0, 0), 0)). From this, (8.21), (8.20), and DEC5, we have HoldsAt (Location
+(Robot, 0, 0), 1). From this, (8.24) and (8.25) (which both follow from (8.29)), (8.30),
+(8.18) (which follows from (8.26)), and DEC9, we have HoldsAt(Location(Robot, Cos
+(cid:2)
+(π/180), Sin(π/180)), 2).

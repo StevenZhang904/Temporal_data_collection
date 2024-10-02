@@ -1,26 +1,22 @@
-
 from pdfminer.high_level import extract_text
 import re
 import os
 import string
 
-
-    
 # Define regex patterns
-formula_pattern = re.compile(r'[⇒→⇐⇔⇕⇖⇗⇘⇙⇚⇛⇜⇝⇞⇟=+\-*/^]|^\(\d+\.\d+\)$')
+formula_pattern = re.compile(r'[⇒→⇐⇔⇕⇖⇗⇘⇙⇚⇛⇜⇝⇞⇟=+∧*/^]|^\(\d+\.\d+\)$')
 example_pattern = re.compile(r'\d+\.\d+\.\d+\s+EXAMPLE.*', flags=re.IGNORECASE)
 equation_number_pattern = re.compile(r'^\(\d+\.\d+\)')
 proposition_pattern = re.compile(r'Proposition\s+\d+\.\d+', flags=re.IGNORECASE)
 bibliographic_notes_pattern = re.compile(r'^BIBLIOGRAPHIC NOTES', flags=re.IGNORECASE)
 function_formula_pattern = re.compile(
-    r'^¬?HoldsAt\(.*?\)$|^Happens\(.*?\)$|^¬?ReleasedAt\(.*?\)$|^Initiates\(.*?\)$|^Terminates\(.*?\)$',
+    r'^¬?HoldsAt\(.*?\)$|^Happens\(.*?\)$|^¬?ReleasedAt\(.*?\)$|^Initiates\(.*?\)$|^Terminates\(.*?\)$|^¬?Releases\(.*?\)$Proposition$',
     flags=re.IGNORECASE
 )
 
 # Refined pattern for headers and footers
 header_pattern = re.compile(r'^CHAPTER\s+\d+|^\d+\.\d+(?!\.\d+)(\s+[A-Za-z]+.*)?$')
 footer_pattern = re.compile(r'^\d+\s*$')
-
 
 def sanitize_filename(filename):
     # Replace colons with dashes
@@ -33,12 +29,17 @@ def sanitize_filename(filename):
 
 def process_example(example):
     title = example['title']
+    raw_lines = example['raw_lines']
     lines = example['lines']
     
-    # Remove empty lines
+    # Remove empty lines from raw_lines
+    raw_lines = [line for line in raw_lines if line.strip() != '']
+    raw_text = '\n'.join(raw_lines)
+
+    # Remove empty lines from lines
     lines = [line for line in lines if line.strip() != '']
     
-    # Combine lines into paragraphs
+    # Combine lines into paragraphs (processed text)
     paragraphs = []
     current_paragraph = ''
     
@@ -57,7 +58,7 @@ def process_example(example):
     if current_paragraph:
         paragraphs.append(current_paragraph.strip())
     
-    # Prepare the text to save
+    # Prepare the processed text to save
     text_to_save = '\n\n'.join(paragraphs)
     
     # Sanitize the filename
@@ -67,9 +68,17 @@ def process_example(example):
     os.makedirs('examples', exist_ok=True)
     filepath = os.path.join('examples', filename)
     
-    # Save the text to a file
+    # Save the processed text to a file
     with open(filepath, 'w') as f:
         f.write(text_to_save)
+
+    # Now save the raw text to 'raw texts' folder
+    os.makedirs('raw texts', exist_ok=True)
+    raw_filepath = os.path.join('raw texts', filename)
+
+    # Save the raw text to a file
+    with open(raw_filepath, 'w') as f:
+        f.write(raw_text)
 
 def parsing_text(text):
     ### For each chapter, extract examples and save them as separate text files
@@ -79,7 +88,6 @@ def parsing_text(text):
     is_bibliographic_notes = False
     current_example = None
 
-        
     for line in text.splitlines():
         stripped_line = line.strip()
         
@@ -98,7 +106,7 @@ def parsing_text(text):
             if current_example is not None:
                 process_example(current_example)
             # Start a new example
-            current_example = {'title': stripped_line, 'lines': []}
+            current_example = {'title': stripped_line, 'raw_lines': [], 'lines': []}
             continue
 
         # End the example section if "Proposition" or similar keywords are found
@@ -113,8 +121,12 @@ def parsing_text(text):
         if header_pattern.match(stripped_line) or footer_pattern.match(stripped_line):
             continue  # Skip headers and footers
 
-        # If we are in an example section, filter out formulas and equations
+        # If we are in an example section, collect both raw and processed lines
         if is_example and current_example is not None:
+            # Collect raw lines
+            current_example['raw_lines'].append(stripped_line)
+            
+            # Now apply filtering to decide whether to include in processed lines
             if (
                 formula_pattern.search(stripped_line)
                 or equation_number_pattern.search(stripped_line)
@@ -140,6 +152,7 @@ def parsing_text(text):
 if __name__ == '__main__':
     chapter_dir = 'Chapters/'
     files_paths = os.listdir(chapter_dir)
+    files_paths.remove("Chapter-2---The-Event-Calculus_2015_Commonsense-Reasoning.pdf") ### Hardcoded to remove the file that is all formulas no examples.
     for file_path in files_paths:
         text = extract_text(os.path.join(chapter_dir, file_path))
         parsing_text(text)

@@ -4,7 +4,7 @@ If an agent turns off the heater of a hot air balloon, then the heater will no l
 
 We have a state constraint.
 
-HoldsAt(Height(b, h1), t) ∧ We have the following trajectory and antitrajectory axioms.
+We have the following trajectory and antitrajectory axioms.
 
 AntiTrajectory(HeaterOn(b), t1, Height(b, h − V · t2), t2) where V is the velocity of the balloon.
 

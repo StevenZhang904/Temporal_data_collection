@@ -1,0 +1,22 @@
+This example is due to Erik Sandewall. We modify the example in Section 5.2.1 as
+follows. If a gun is loaded and an agent spins the gun, then the gun’s readiness to
+shoot will no longer be subject to the commonsense law of inertia:
+HoldsAt(Loaded(g), t) ⇒ Releases(Spin(a, g), Loaded(g), t)
+(5.30)
+Instead of waiting at timepoint 1, Nathan spins the gun:
+Happens(Spin(Nathan, Gun), 1)
+(5.31)
+Notice that given axioms (5.15), (5.27), and (5.29), axiom (5.18) ensures that, after
+a loaded gun is fired, the gun is no longer loaded and Loaded(Gun) is no longer
+released from the commonsense law of inertia.
+The fluent term Alive(Turkey) is subject to the commonsense law of inertia at all
+times:
+¬ReleasedAt(Alive(Turkey), t)
+Only initially is Loaded(Gun) subject to the commonsense law of inertia:
+¬ReleasedAt(Loaded(Gun), 0)
+(5.32)
+(5.33)
+We can then show that there are two possible outcomes: (1) If the gun is
+loaded at timepoint 2, then the turkey will no longer be alive at timepoint 3, and
+(2) if the gun is not loaded at timepoint 2, then the turkey will still be alive at
+timepoint 3.

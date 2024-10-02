@@ -4,7 +4,7 @@ We modify the example in Section 6.1.1 to use release axioms and state constrain
 
 Releases(PickUp(a, o), InRoom(o, r), t) Whenever an agent is holding an object, if the agent is in one room, then the object is also in that room.
 
-HoldsAt(Holding(a, o), t) ∧ If an agent is in a room and the agent lets go of an object, then the object will be in the room, and the fact that the object is in that room will no longer be released from the commonsense law of inertia.
+If an agent is in a room and the agent lets go of an object, then the object will be in the room, and the fact that the object is in that room will no longer be released from the commonsense law of inertia.
 
 Unlike with the use of effect axioms for representing indirect effects, if we add running as another way of moving from room to room, we do not have to add any further axioms. The state constraint (6.46) represents an indirect effect of an agent’s location, no matter how the agent’s location is changed.
 

@@ -1,5 +1,5 @@
 Let us extend our device example to erratic devices. If a device is erratic, then when it is turned on, it may or may not go on. We introduce the determining fluent DeterminingFluent(d). We add a cancellation axiom that states that if a device is erratic and the determining fluent is true, then the device is Ab1.
 
-HoldsAt(Erratic(d), t) ∧ Ab1(d, t) Now suppose that the device’s switch is not broken, the device is plugged in, the device is erratic, and Nathan turns on the device at timepoint 0. We can show that if DeterminingFluent(Device1) is false at timepoint 0, then the device will be on at timepoint 1. But if DeterminingFluent(Device1) is true at timepoint 0, then the device will not be on at timepoint 1. We use the following observations. The device is erratic.
+Ab1(d, t) Now suppose that the device’s switch is not broken, the device is plugged in, the device is erratic, and Nathan turns on the device at timepoint 0. We can show that if DeterminingFluent(Device1) is false at timepoint 0, then the device will be on at timepoint 1. But if DeterminingFluent(Device1) is true at timepoint 0, then the device will not be on at timepoint 1. We use the following observations. The device is erratic.
 
 The determining fluent is always released from the commonsense law of inertia, and On, BrokenSwitch, PluggedIn, and Erratic are never released from this law.

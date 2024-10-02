@@ -16,13 +16,13 @@ If an agent eats food that is on a surface, then the food will no longer be on t
 
 We provide axioms for belief revision.
 
-HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, On(a, s)), t) ∧ HoldsAt(Believe(a, On(a, s)), t) ∧ We provide planning axioms. We give a definition for SelectedPlan(a, g, p, t) that enables the agent to plan trips consisting of one and two jumps in order to obtain food.
+We provide planning axioms. We give a definition for SelectedPlan(a, g, p, t) that enables the agent to plan trips consisting of one and two jumps in order to obtain food.
 
-∃s1, s2, f (HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, CanJump(s1, s2)), t) ∧ HoldsAt(Believe(a, On( f , s2)), t) ∧ ∃s1, s2, s3, f (HoldsAt(Believe(a, On(a, s1)), t) ∧ HoldsAt(Believe(a, CanJump(s1, s2)), t) ∧ HoldsAt(Believe(a, CanJump(s2, s3)), t) ∧ HoldsAt(Believe(a, On( f , s3)), t) ∧ We give a definition for SoundPlan(a, g, p, t) that deals with the plans selected by the agent believes it is possible to jump from the source surface to the destination surface.
+We give a definition for SoundPlan(a, g, p, t) that deals with the plans selected by the agent believes it is possible to jump from the source surface to the destination surface.
 
-the agent is not satiated, the agent is on a surface, and some food is on the surface, then the agent will eat the food.
+In addition to the goal-driven behavior, the agent also has a reactive behavior. If the agent is not satiated, the agent is on a surface, and some food is on the surface, then the agent will eat the food.
 
-¬HoldsAt(Satiated(a), t) ∧ HoldsAt(On(a, s), t) ∧ We specify some observations. The cat has the goal of being satiated, and no plans are active.
+We specify some observations. The cat has the goal of being satiated, and no plans are active.
 
 The cat is on the floor, food is on the table and the shelf, and it is possible to jump from the floor to the chair, from the chair to the table, and from the shelf to the table.
 

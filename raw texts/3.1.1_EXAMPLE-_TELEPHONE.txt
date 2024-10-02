@@ -1,0 +1,127 @@
+We perform complex commonsense reasoning about the effects of events whenever
+we use a telephone. The behavior of a phone is highly context-sensitive. If we pick up
+an idle phone, we expect to get a dial tone. But if we pick up a phone that is ringing,
+we expect to be connected to the caller.
+We can represent our knowledge about telephones using positive and negative
+effect axioms. If an agent picks up an idle phone, the phone will have a dial tone and
+will no longer be idle:
+HoldsAt(Idle(p), t) ⇒
+Initiates(PickUp(a, p), DialTone(p), t)
+HoldsAt(Idle(p), t) ⇒
+Terminates(PickUp(a, p), Idle(p), t)
+(3.1)
+(3.2)
+After picking up a phone, an agent may decide not to place a call. If an agent sets
+down a phone with a dial tone, the phone will be idle and will no longer have a
+dial tone:
+HoldsAt(DialTone(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+HoldsAt(DialTone(p), t) ⇒
+Terminates(SetDown(a, p), DialTone(p), t)
+(3.3)
+(3.4)
+When phone p1 has a dial tone and an agent dials phone p2 from p1, what happens
+depends on the state of p2. If p2 is idle, then p1 will be ringing p2, p1 will no longer
+have a dial tone, and p2 will no longer be idle:
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Initiates(Dial(a, p1, p2), Ringing(p1, p2), t)
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), DialTone(p1), t)
+HoldsAt(DialTone(p1), t) ∧ HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), Idle(p2), t)
+If p2 is not idle, then p1 will have a busy signal:
+HoldsAt(DialTone(p1), t) ∧ ¬HoldsAt(Idle(p2), t) ⇒
+Initiates(Dial(a, p1, p2), BusySignal(p1), t)
+HoldsAt(DialTone(p1), t) ∧ ¬HoldsAt(Idle(p2), t) ⇒
+Terminates(Dial(a, p1, p2), DialTone(p1), t)
+(3.5)
+(3.6)
+(3.7)
+(3.8)
+(3.9)
+If an agent sets down a phone with a busy signal, then the phone will be idle and will
+no longer have a busy signal:
+HoldsAt(BusySignal(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+HoldsAt(BusySignal(p), t) ⇒
+Terminates(SetDown(a, p), BusySignal(p), t)
+(3.10)
+(3.11)
+A call may go unanswered. If phone p1 is ringing phone p2 and an agent sets down
+p1, then p1 will be idle, p2 will be idle, and p1 will no longer be ringing p2:
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p1), t)
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p2), t)
+HoldsAt(Ringing(p1, p2), t) ⇒
+Terminates(SetDown(a, p1), Ringing(p1, p2), t)
+(3.12)
+(3.13)
+(3.14)
+A call may be answered. If phone p1 is ringing phone p2 and an agent picks up p2,
+then p1 will be connected to p2 and p1 will no longer be ringing p2:
+HoldsAt(Ringing(p1, p2), t) ⇒
+Initiates(PickUp(a, p2), Connected(p1, p2), t)
+HoldsAt(Ringing(p1, p2), t) ⇒
+Terminates(PickUp(a, p2), Ringing(p1, p2), t)
+(3.15)
+(3.16)
+A call may be completed. If phone p1 is connected to phone p2 and an agent sets down
+p1, then p1 will be idle, p2 will be disconnected, and p1 will no longer be connected
+to p2:
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Idle(p1), t)
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p1), Disconnected(p2), t)
+HoldsAt(Connected(p1, p2), t) ⇒
+Terminates(SetDown(a, p1), Connected(p1, p2), t)
+(3.17)
+(3.18)
+(3.19)
+Similarly, if phone p1 is connected to phone p2 and an agent sets down p2, then p2
+will be idle, p1 will be disconnected, and p1 will no longer be connected to p2:
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p2), Idle(p2), t)
+HoldsAt(Connected(p1, p2), t) ⇒
+Initiates(SetDown(a, p2), Disconnected(p1), t)
+HoldsAt(Connected(p1, p2), t) ⇒
+Terminates(SetDown(a, p2), Connected(p1, p2), t)
+(3.20)
+(3.21)
+(3.22)
+If an agent sets down a phone that is disconnected, then the phone will be idle and
+the phone will no longer be disconnected:
+HoldsAt(Disconnected(p), t) ⇒
+Initiates(SetDown(a, p), Idle(p), t)
+HoldsAt(Disconnected(p), t) ⇒
+Terminates(SetDown(a, p), Disconnected(p), t)
+(3.23)
+(3.24)
+Let us now use this axiomatization to solve a particular reasoning problem. We start
+by specifying some observations. At timepoint 0, all phones are idle, no phones have a
+dial tone or busy signal, no phones are ringing other phones, no phones are connected
+to other phones, and no phones are disconnected:
+HoldsAt(Idle(p), 0)
+¬HoldsAt(DialTone(p), 0)
+¬HoldsAt(BusySignal(p), 0)
+¬HoldsAt(Ringing(p1, p2), 0)
+¬HoldsAt(Connected(p1, p2), 0)
+¬HoldsAt(Disconnected(p), 0)
+(3.25)
+(3.26)
+(3.27)
+(3.28)
+(3.29)
+(3.30)
+We specify that fluents are never released from the commonsense law of inertia:
+¬ReleasedAt(f , t)
+(3.31)
+We specify a narrative. One agent picks up the phone and dials another agent, and
+then the other agent answers:
+Happens(PickUp(Agent1, Phone1), 0)
+(3.32)
+Happens(Dial(Agent1, Phone1, Phone2), 1)
+Happens(PickUp(Agent2, Phone2), 2)
+(3.33)
+(3.34)
+We can then show that the two agents will be connected.

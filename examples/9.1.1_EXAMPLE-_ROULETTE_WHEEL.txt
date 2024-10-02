@@ -4,14 +4,14 @@ For any given wheel, this fluent specifies one of the numbers 1, 2, or 3 at any 
 
 And for any given wheel, this fluent specifies a unique number at any given timepoint.
 
-HoldsAt(WheelNumberDeterminer(w, n1), t) ∧ We have several effect axioms. If the determining fluent specifies a particular number for a wheel and a dealer spins the wheel, then the wheel will be on that number.
+We have several effect axioms. If the determining fluent specifies a particular number for a wheel and a dealer spins the wheel, then the wheel will be on that number.
 
 If a wheel is on one number, the determining fluent specifies another number for the wheel, the first number is different from the second number, and a dealer spins the wheel, then the wheel will no longer be on the first number.
 
-HoldsAt(WheelNumber(w, n1), t) ∧ HoldsAt(WheelNumberDeterminer(w, n2), t) ∧ If a dealer resets a wheel, then the wheel is no longer on any number.
+If a dealer resets a wheel, then the wheel is no longer on any number.
 
 We have a state constraint that says that the wheel is on at most one number at a time.
 
-HoldsAt(WheelNumber(w, n1), t) ∧ Suppose that a wheel that is not on any number is spun.
+Suppose that a wheel that is not on any number is spun.
 
 We can show that the wheel will be on one of the numbers 1, 2, or 3 and that, if it lands on a given number, it will still be on that number one timepoint later.

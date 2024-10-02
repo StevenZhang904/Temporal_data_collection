@@ -6,7 +6,7 @@ R is activated again. The cycle repeats. In a real circuit, the result of a rela
 
 We have the following trigger axioms.
 
-¬HoldsAt(Lit(L), t) ∧ HoldsAt(Closed(S1), t) ∧ HoldsAt(Lit(L), t) ∧ HoldsAt(Closed(S2), t) ∧ ¬HoldsAt(Activated(R), t) ∧ HoldsAt(Closed(S1), t) ∧ HoldsAt(Closed(S2), t) ∧ HoldsAt(Activated(R), t) ∧ (¬HoldsAt(Closed(S1), t) ∨ ¬HoldsAt(Closed(S2), t) ∨ We add the following effect axiom to those already given.
+(¬HoldsAt(Closed(S1), t) ∨ ¬HoldsAt(Closed(S2), t) ∨ We add the following effect axiom to those already given.
 
 We use the observations and narrative as detailed before.
 

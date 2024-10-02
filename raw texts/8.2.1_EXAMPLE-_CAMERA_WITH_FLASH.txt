@@ -1,0 +1,23 @@
+Consider a camera with a flash unit. If a camera’s shutter is released at the same
+instant that its flash is triggered, then we have the cumulative effect that a properly
+exposed picture is taken:
+Happens(TriggerFlash(c), t) ⇒
+Initiates(ReleaseShutter(c), ProperlyExposedPicture(t), t)
+(8.2)
+If a camera’s shutter is released and its flash is not triggered at the same instant, then
+an improperly exposed picture is taken:
+¬Happens(TriggerFlash(c), t) ⇒
+Initiates(ReleaseShutter(c), ImproperlyExposedPicture(t), t)
+(8.3)
+The shutter is released at timepoints 0 and 1, but only at timepoint 1 is the flash
+triggered:
+¬ReleasedAt(f , t)
+Happens(ReleaseShutter(Camera), 0)
+Happens(TriggerFlash(Camera), 1)
+Happens(ReleaseShutter(Camera), 1)
+(8.4)
+(8.5)
+(8.6)
+(8.7)
+We can show that an improperly exposed picture is taken at timepoint 0 and that a
+properly exposed picture is taken at timepoint 1.

@@ -1,0 +1,33 @@
+Consider the example of turning on a device. We introduce the abnormality predicate
+Ab1(d, t), which represents that device d is abnormal in some way at timepoint t. We
+use this predicate in an effect axiom. If a device is not Ab1 and an agent turns on the
+device, then the device will be on:
+¬Ab1(d, t) ⇒ Initiates(TurnOn(a, d), On(d), t)
+(12.7)
+We add cancellation axioms that represent qualifications. A device is Ab1 if its switch
+is broken:
+HoldsAt(BrokenSwitch(d), t) ⇒ Ab1(d, t)
+A device is Ab1 if it is not plugged in:
+¬HoldsAt(PluggedIn(d), t) ⇒ Ab1(d, t)
+(12.8)
+(12.9)
+A particular antique device never works:
+Ab1(AntiqueDevice1, t)
+(12.10)
+Now consider the following observations and narrative in which the device is
+initially off and then the device is turned on:
+¬HoldsAt(On(Device1), 0)
+¬ReleasedAt( f , t)
+Happens(TurnOn(Nathan, Device1), 0)
+(12.11)
+(12.12)
+(12.13)
+Suppose that the device’s switch is not broken, the device is plugged in, and the device
+is not the antique device:
+¬HoldsAt(BrokenSwitch(Device1), 0)
+HoldsAt(PluggedIn(Device1), 0)
+Device1 (cid:7)= AntiqueDevice1
+(12.14)
+(12.15)
+(12.16)
+We can then show that the device will be on at timepoint 1.

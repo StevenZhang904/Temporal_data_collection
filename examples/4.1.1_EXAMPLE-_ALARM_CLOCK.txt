@@ -1,4 +1,4 @@
-gered events. The alarm going off is a triggered event, and we can formalize the operation of an alarm clock using trigger axioms.
+Whenever we use an alarm clock, we perform commonsense reasoning about triggered events. The alarm going off is a triggered event, and we can formalize the operation of an alarm clock using trigger axioms.
 
 We start with some effect axioms. If a clock’s alarm time is t1 and an agent sets the clock’s alarm time to t2, then the clock’s alarm time will be t2 and will no longer be t1.
 
